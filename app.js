@@ -1,21 +1,30 @@
 const express = require('express');
+const path = require('path');
+const { sortearTimes, getListaBase } = require('./sorteio'); // Importando o código do sorteio
+
 const app = express();
-const sorteio = require('./sorteio');
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static('public'));
-app.use(express.json());
+// Serve arquivos estáticos da pasta 'public' onde está o index.html
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/sortear', (req, res) => {
-    const jogadores = req.body.jogadores;
-    const resultado = sorteio.sortearTimes(jogadores);
-    res.json(resultado);
-});
-
+// Endpoint para retornar os jogadores base
 app.get('/jogadoresBase', (req, res) => {
-    const jogadoresPadrao = sorteio.getListaBase();
-    res.json(jogadoresPadrao);
+  res.json(getListaBase());
 });
 
-app.listen(3000, () => {
-    console.log('Servidor rodando em http://localhost:3000');
+// Endpoint para sorteio dos times
+app.post('/sortear', express.json(), (req, res) => {
+  const { jogadores } = req.body;
+  const times = sortearTimes(jogadores, 2); // 2 times para o sorteio
+  res.json(times);
+});
+
+// Página inicial (index.html dentro de public)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
