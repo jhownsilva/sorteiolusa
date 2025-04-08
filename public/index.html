@@ -188,25 +188,27 @@
 
   function sortear() {
     let dadosEnvio = { jogadores: [] };
-    fetch('/jogadoresBase')
+    fetch('/jogadoresBase') // Fazendo a requisição para obter a lista de jogadores
       .then(res => res.json())
       .then(base => {
-        dadosEnvio.jogadores = usarExtras ? [...base, ...jogadores] : base;
-        enviarParaSorteio(dadosEnvio);
-      });
+        dadosEnvio.jogadores = usarExtras ? [...base, ...jogadores] : base; // Adicionando jogadores extras, se necessário
+        enviarParaSorteio(dadosEnvio); // Envia os jogadores para a rota de sorteio
+      })
+      .catch(err => console.error('Erro ao buscar os jogadores: ', err));
   }
 
   function enviarParaSorteio(dados) {
     fetch('/sortear', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
+      body: JSON.stringify(dados) // Envia a lista de jogadores
     })
     .then(res => res.json())
     .then(dados => {
       const container = document.getElementById("resultado");
-      container.innerHTML = "";
+      container.innerHTML = ""; // Limpa o resultado anterior
 
+      // Adiciona os times sorteados na tela
       Object.entries(dados).forEach(([time, setores], i) => {
         const teamDiv = document.createElement("div");
         const teamName = i === 0 ? "TIME VERDE" : "TIME BRANCO";
@@ -236,7 +238,7 @@
               const nome = resto.join(" - ");
               const card = document.createElement("div");
               card.className = "card";
-              card.innerHTML = `
+              card.innerHTML = ` 
                 <div class="numero">${numero}</div>
                 <div class="nome">${nome}</div>
               `;
@@ -249,7 +251,8 @@
 
         container.appendChild(teamDiv);
       });
-    });
+    })
+    .catch(err => console.error('Erro ao sortear os times: ', err));
   }
 
   function escolherCapitaes(lista, quantia) {

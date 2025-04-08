@@ -1,24 +1,24 @@
 const express = require('express');
-const path = require('path');
-const { sortearTimes, getListaBase } = require('./sorteio'); // Importe o arquivo de sorteio.js
+const { sortearTimes, getListaBase } = require('./sorteio'); // Certifique-se de que sorteio.js está sendo importado corretamente
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Servir arquivos estáticos da pasta 'public' (onde está o index.html)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+app.use(express.json()); // Habilita a leitura de JSON no corpo das requisições
 
-// Endpoint para retornar a lista de jogadores
-app.get('/jogadores', (req, res) => {
+// Rota para obter os jogadores base
+app.get('/jogadoresBase', (req, res) => {
   res.json(getListaBase()); // Retorna a lista de jogadores do sorteio.js
 });
 
-// Página inicial (index.html)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Serve a página HTML
+// Rota para fazer o sorteio
+app.post('/sortear', (req, res) => {
+  const dados = req.body;  // Os jogadores que foram passados do frontend
+  const resultado = sortearTimes(dados.jogadores); // Sorteia os times
+  res.json(resultado); // Retorna o resultado do sorteio
 });
 
-// Inicia o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
