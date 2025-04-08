@@ -263,17 +263,21 @@
   }
 
   function baixarImagem() {
-    const alvo = document.getElementById('resultado');
-    html2canvas(alvo, { 
-      useCORS: true, 
-      allowTaint: true
-    }).then(function(canvas) {
-      const link = document.createElement("a");
-      link.download = "sorteio-times.jpg"; 
-      link.href = canvas.toDataURL("image/jpeg", 1.0);
-      link.click();
-    });
-  }
+  const alvo = document.getElementById('resultado'); // Certifique-se de que esse é o ID correto
+  html2canvas(alvo, {
+    useCORS: true, // Permite o carregamento de imagens externas com CORS
+    allowTaint: true, // Permite imagens externas que não possuem CORS
+    logging: true, // Ativa o log de erros do html2canvas (ajuda na depuração)
+  }).then(function(canvas) {
+    const link = document.createElement("a");
+    link.download = "sorteio-times.jpg"; // Nome da imagem gerada
+    link.href = canvas.toDataURL("image/jpeg", 1.0); // Gera a imagem no formato JPEG
+    link.click(); // Simula o clique para download
+  }).catch(function(error) {
+    console.error("Erro ao gerar a imagem:", error); // Caso haja algum erro, ele será exibido no console
+  });
+}
+
 </script>
 
 </body>
