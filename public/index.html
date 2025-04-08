@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sorteio de Times - Com Capitães</title>
+  <title>Sorteio de Times - Tema Futebol</title>
   <style>
+    /* Definindo uma fonte moderna */
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 20px;
       color: #fff;
-      /* Fundo temático de futebol */
       background: url('https://upload.wikimedia.org/wikipedia/commons/1/19/Soccer_ball_on_the_grass.jpg') no-repeat center center fixed;
       background-size: cover;
-      backdrop-filter: brightness(0.85);
+      backdrop-filter: brightness(0.75);
     }
 
     h1 {
       text-align: center;
-      font-size: 30px;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px #000;
+      font-size: 35px;
+      margin-bottom: 30px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
     }
 
     .controls {
@@ -29,28 +29,34 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 15px;
     }
 
     button {
-      background: #007bff;
+      background: linear-gradient(135deg, #007bff, #0056b3);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      padding: 12px 24px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #0056b3, #007bff);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
 
     .kickoff {
-      background: #ff9900;
+      background: linear-gradient(135deg, #ff9900, #ff6600);
     }
 
     .teams-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 30px;
       justify-content: center;
     }
 
@@ -58,45 +64,56 @@
       width: 100%;
       max-width: 600px;
       background: rgba(0, 0, 0, 0.75);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
     }
 
     .team h2 {
       text-align: center;
       margin-top: 0;
-      font-size: 24px;
+      font-size: 28px;
       color: #00ff99;
+      font-weight: 600;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
     }
 
     .zona {
-      margin-top: 20px;
+      margin-top: 25px;
     }
 
     .zona h3 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       color: #ffd700;
-      margin-bottom: 10px;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 4px;
+      margin-bottom: 15px;
       text-transform: uppercase;
+      text-align: center;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
     }
 
     .cards {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 20px;
+      justify-content: center;
     }
 
     .card {
-      background: #eee;
-      border-radius: 10px;
-      padding: 10px;
-      width: 100px;
+      background: linear-gradient(135deg, #f4f4f4, #ffffff);
+      border-radius: 12px;
+      padding: 15px;
+      width: 120px;
       text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
 
     .team1 .card {
@@ -110,14 +127,15 @@
     }
 
     .numero {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
 
     .nome {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
+      color: #333;
     }
 
     .capitaes {
@@ -125,9 +143,9 @@
     }
 
     .capitaes h3 {
-      font-size: 18px;
-      margin-bottom: 6px;
-      color: #00ccff;
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #007bff;
     }
 
     .capitaes ul {
@@ -136,15 +154,16 @@
     }
 
     .capitaes li {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: bold;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      color: #333;
     }
 
     @media screen and (max-width: 600px) {
       .card {
-        width: 80px;
-        font-size: 12px;
+        width: 90px;
+        font-size: 14px;
       }
     }
   </style>
