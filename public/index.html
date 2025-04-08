@@ -7,16 +7,20 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
       margin: 0;
       padding: 20px;
-      color: #333;
+      color: #fff;
+      /* Fundo temático de futebol */
+      background: url('https://images.unsplash.com/photo-1529675514978-467c1a6a0521') no-repeat center center fixed;
+      background-size: cover;
+      backdrop-filter: brightness(0.85);
     }
 
     h1 {
       text-align: center;
-      font-size: 28px;
+      font-size: 30px;
       margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #000;
     }
 
     .controls {
@@ -36,6 +40,7 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     .kickoff {
@@ -52,17 +57,17 @@
     .team {
       width: 100%;
       max-width: 600px;
-      background: white;
+      background: rgba(0, 0, 0, 0.75);
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
 
     .team h2 {
       text-align: center;
       margin-top: 0;
       font-size: 24px;
-      color: #111;
+      color: #00ff99;
     }
 
     .zona {
@@ -72,7 +77,7 @@
     .zona h3 {
       font-size: 18px;
       font-weight: bold;
-      color: #222;
+      color: #ffd700;
       margin-bottom: 10px;
       border-bottom: 2px solid #ccc;
       padding-bottom: 4px;
@@ -91,7 +96,7 @@
       padding: 10px;
       width: 100px;
       text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
     }
 
     .team1 .card {
@@ -122,7 +127,7 @@
     .capitaes h3 {
       font-size: 18px;
       margin-bottom: 6px;
-      color: #007bff;
+      color: #00ccff;
     }
 
     .capitaes ul {
@@ -146,7 +151,7 @@
 </head>
 <body>
 
-<h1>Sorteio de Times</h1>
+<h1>Sorteio de Times ⚽</h1>
 
 <div class="controls">
   <button onclick="sortear()">🎲 Sortear Times</button>
@@ -157,7 +162,7 @@
 
 <div class="teams-container" id="resultado"></div>
 
-<!-- Biblioteca html2canvas para gerar a imagem -->
+<!-- html2canvas para exportar imagem -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
@@ -209,7 +214,6 @@
         teamDiv.className = teamClass;
         teamDiv.innerHTML = `<h2>${teamName}</h2>`;
 
-        // Selecionar jogadores para capitães
         const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
         const capitaes = escolherCapitaes(todosJogadores, 2);
 
