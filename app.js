@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const { sortearTimes, getListaBase } = require('./sorteio'); // Importando o código do sorteio
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
