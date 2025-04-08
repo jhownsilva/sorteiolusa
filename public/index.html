@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sorteio de Times - Tema Futebol</title>
+  <title>Sorteio de Times - Com Capitães</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
       margin: 0;
       padding: 20px;
-      color: #fff;
-      background: url('https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
-      backdrop-filter: brightness(0.85);
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      font-size: 30px;
+      font-size: 28px;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 4px #000;
     }
 
     .controls {
@@ -39,7 +36,6 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     .kickoff {
@@ -56,17 +52,17 @@
     .team {
       width: 100%;
       max-width: 600px;
-      background: rgba(0, 0, 0, 0.75);
+      background: white;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
     .team h2 {
       text-align: center;
       margin-top: 0;
       font-size: 24px;
-      color: #00ff99;
+      color: #111;
     }
 
     .zona {
@@ -76,7 +72,7 @@
     .zona h3 {
       font-size: 18px;
       font-weight: bold;
-      color: #ffd700;
+      color: #222;
       margin-bottom: 10px;
       border-bottom: 2px solid #ccc;
       padding-bottom: 4px;
@@ -95,7 +91,7 @@
       padding: 10px;
       width: 100px;
       text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
     }
 
     .team1 .card {
@@ -126,7 +122,7 @@
     .capitaes h3 {
       font-size: 18px;
       margin-bottom: 6px;
-      color: #00ccff;
+      color: #007bff;
     }
 
     .capitaes ul {
@@ -150,7 +146,7 @@
 </head>
 <body>
 
-<h1>Sorteio de Times ⚽</h1>
+<h1>Sorteio de Times</h1>
 
 <div class="controls">
   <button onclick="sortear()">🎲 Sortear Times</button>
@@ -161,10 +157,8 @@
 
 <div class="teams-container" id="resultado"></div>
 
-<!-- html2canvas para exportar imagem -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/sorteio.js"></script>
+<!-- Biblioteca html2canvas para gerar a imagem -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
   let jogadores = JSON.parse(localStorage.getItem("jogadores")) || [];
@@ -205,7 +199,7 @@
     .then(res => res.json())
     .then(dados => {
       const container = document.getElementById("resultado");
-      container.innerHTML = ""; 
+      container.innerHTML = "";
 
       Object.entries(dados).forEach(([time, setores], i) => {
         const teamDiv = document.createElement("div");
@@ -215,6 +209,7 @@
         teamDiv.className = teamClass;
         teamDiv.innerHTML = `<h2>${teamName}</h2>`;
 
+        // Selecionar jogadores para capitães
         const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
         const capitaes = escolherCapitaes(todosJogadores, 2);
 
@@ -263,22 +258,14 @@
   }
 
   function baixarImagem() {
-    const alvo = document.getElementById('resultado');  // Captura a área com os times sorteados
-    html2canvas(alvo, {
-        useCORS: true,  // Permite o carregamento de imagens externas com CORS
-        allowTaint: true,  // Permite imagens que não possuem CORS
-        logging: true  // Ativa a depuração do html2canvas
-    }).then(function(canvas) {
-        // Cria o link de download
-        const link = document.createElement('a');
-        link.download = 'sorteio-times.jpg';  // Nome da imagem gerada
-        link.href = canvas.toDataURL('image/jpeg', 1.0);  // Gera a imagem no formato JPEG
-        link.click();  // Simula o clique para download
-    }).catch(function(error) {
-        console.error("Erro ao gerar a imagem:", error);  // Caso haja algum erro, ele será exibido no console
+    const alvo = document.getElementById('resultado');
+    html2canvas(alvo).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "sorteio-times.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 1.0);
+      link.click();
     });
-}
-
+  }
 </script>
 
 </body>
