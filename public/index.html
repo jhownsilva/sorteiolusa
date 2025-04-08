@@ -205,7 +205,7 @@
     .then(res => res.json())
     .then(dados => {
       const container = document.getElementById("resultado");
-      container.innerHTML = "";
+      container.innerHTML = ""; 
 
       Object.entries(dados).forEach(([time, setores], i) => {
         const teamDiv = document.createElement("div");
@@ -264,9 +264,12 @@
 
   function baixarImagem() {
     const alvo = document.getElementById('resultado');
-    html2canvas(alvo).then(canvas => {
+    html2canvas(alvo, { 
+      useCORS: true, 
+      allowTaint: true
+    }).then(function(canvas) {
       const link = document.createElement("a");
-      link.download = "sorteio-times.jpg";
+      link.download = "sorteio-times.jpg"; 
       link.href = canvas.toDataURL("image/jpeg", 1.0);
       link.click();
     });
