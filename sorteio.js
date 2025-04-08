@@ -32,7 +32,6 @@ const jogadores = [
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
   { nome: "Thiago", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Bruninho", posicao: "volante", ranking: 4 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -48,9 +47,9 @@ const jogadores = [
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
-  zagueiro: [3, 5, 13, 12],
+  zagueiro: [3, 5, 13, 14],
   lateral: [2, 4, 16, 17],
-  volante: [6, 15, 14, 16, 18],
+  volante: [6, 15, 16, 18],
   meia: [7, 8, 10, 22],
   atacante: [11, 19, 20, 21],
   centroavante: [9, 23]
