@@ -263,21 +263,15 @@
   }
 
   function baixarImagem() {
-    const alvo = document.getElementById('resultado');
-    html2canvas(alvo, { 
-        useCORS: true, // Permite o carregamento de imagens externas
-        allowTaint: true, // Permite imagens que não possuem CORS
-        logging: true // Ativa a depuração do html2canvas
-    }).then(function(canvas) {
-        const link = document.createElement('a');
-        link.download = "sorteio-times.jpg";
-        link.href = canvas.toDataURL("image/jpeg", 1.0);
-        link.click(); // Simula o clique para download
-    }).catch(function(error) {
-        console.error("Erro ao gerar a imagem:", error);
-    });
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0, 0, 200, 200);  // Cria um quadrado vermelho simples
+    const link = document.createElement('a');
+    link.download = 'teste.jpg';
+    link.href = canvas.toDataURL('image/jpeg', 1.0);
+    link.click();
 }
-
 
 </script>
 
