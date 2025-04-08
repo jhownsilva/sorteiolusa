@@ -7,28 +7,25 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
+      background: #f4f4f4;
       margin: 0;
       padding: 20px;
-      box-sizing: border-box;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      font-size: 28px;
+      font-size: 30px;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 4px #000;
     }
 
     .controls {
       text-align: center;
       margin-bottom: 30px;
       display: flex;
-      justify-content: center;
-      gap: 15px;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
 
     button {
@@ -39,9 +36,6 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
-      width: 180px;
-      font-size: 16px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     .kickoff {
@@ -51,32 +45,30 @@
     .teams-container {
       display: flex;
       justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin-top: 20px;
+      width: 100%;
+      max-width: 1200px; /* Aumenta a largura da área do time */
+      margin: 0 auto;
     }
 
     .team {
-      width: 250px;
-      background: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      max-width: 350px; /* Largura do time */
+      background-color: #1d1f26;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 15px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+      text-align: center;
     }
 
     .team h2 {
       text-align: center;
       margin-top: 0;
-      font-size: 22px;
-      color: #00ff99;
+      font-size: 24px;
+      color: #fff;
     }
 
     .zona {
       margin-top: 20px;
-      overflow-y: auto;
     }
 
     .zona h3 {
@@ -90,28 +82,21 @@
     }
 
     .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      justify-items: center;
-      align-items: center;
-      padding: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center; /* Alinha os cards ao centro */
     }
 
     .card {
       background: #eee;
       border-radius: 10px;
-      padding: 15px;
+      padding: 10px;
       width: 80px;
-      height: 80px;
+      height: 100px;
       text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+      font-size: 16px;
     }
 
     .team1 .card {
@@ -125,13 +110,13 @@
     }
 
     .numero {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       margin-bottom: 5px;
     }
 
     .nome {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
     }
 
@@ -142,7 +127,7 @@
     .capitaes h3 {
       font-size: 18px;
       margin-bottom: 6px;
-      color: #00ccff;
+      color: #007bff;
     }
 
     .capitaes ul {
@@ -151,51 +136,19 @@
     }
 
     .capitaes li {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    /* Responsividade para telas menores */
-    @media screen and (max-width: 800px) {
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .card {
-        width: 70px;
-        height: 70px;
-        font-size: 12px;
-      }
-
-      .team {
-        width: 220px;
-      }
-
-      button {
-        width: 160px;
-        font-size: 14px;
-      }
+      margin-bottom: 4px;
     }
 
     @media screen and (max-width: 600px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
       .card {
-        width: 60px;
-        height: 60px;
-        font-size: 10px;
+        width: 80px;
+        font-size: 12px;
       }
 
       .team {
-        width: 200px;
-      }
-
-      button {
-        width: 150px;
-        font-size: 12px;
+        max-width: 100%; /* Ajusta o tamanho do time para dispositivos menores */
       }
     }
   </style>
@@ -213,8 +166,8 @@
 
 <div class="teams-container" id="resultado"></div>
 
-<!-- html2canvas para exportar imagem -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- Bibliotecas JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/sorteio.js"></script>
 
@@ -267,7 +220,6 @@
         teamDiv.className = teamClass;
         teamDiv.innerHTML = `<h2>${teamName}</h2>`;
 
-        // Selecionar jogadores para capitães
         const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
         const capitaes = escolherCapitaes(todosJogadores, 2);
 
