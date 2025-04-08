@@ -1,5 +1,4 @@
 const jogadores = [
-  // ➕ Cole sua lista completa de jogadores aqui (já configurada com nome, posicao e ranking)
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Félix Gustavinho", posicao: "atacante", ranking: 3 },
@@ -45,7 +44,6 @@ const jogadores = [
   { nome: "Filipe", posicao: "goleiro", ranking: 5 }
 ];
 
-// 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
   zagueiro: [3, 5, 13, 12],
@@ -71,7 +69,6 @@ function sortearTimes(jogadores, numTimes = 2) {
 
   for (let posicao in porPosicao) {
     let lista = [...porPosicao[posicao]];
-
     lista = embaralhar(lista.sort((a, b) => b.ranking - a.ranking));
 
     const total = lista.length;
@@ -99,14 +96,12 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // ✅ Aplicar numeração personalizada individual para cada time
   const resultado = {};
 
   times.forEach((time, i) => {
     const timeFinal = {};
 
     for (let posicao in time) {
-      // Copia os números permitidos dessa zona para esse time
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
         const numero = numerosDisponiveis.shift();
