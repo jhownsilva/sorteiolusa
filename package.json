@@ -1,11 +1,7 @@
 {
   "name": "sorteio-times",
   "version": "1.0.0",
-<<<<<<< HEAD
   "description": "Projeto de sorteio de times de futebol",
-=======
-  "description": "",
->>>>>>> 1b073480f8ee96e02347ea3b51a24ceb7793b7d8
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
@@ -13,10 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-<<<<<<< HEAD
-=======
   "type": "commonjs",
->>>>>>> 1b073480f8ee96e02347ea3b51a24ceb7793b7d8
   "dependencies": {
     "express": "^4.17.1"
   }
