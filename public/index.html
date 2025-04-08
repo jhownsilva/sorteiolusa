@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sorteio de Times - Tema Futebol</title>
   <style>
-    /* Estilo geral da página */
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background: url('https://example.com/futebol-background.jpg') no-repeat center center fixed; 
+      background: url('https://example.com/futebol-background.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       box-sizing: border-box;
@@ -67,7 +66,7 @@
     .team {
       width: 100%;
       max-width: 500px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       border-radius: 15px;
       padding: 20px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -81,12 +80,33 @@
 
     .team h2 {
       text-align: center;
-      color: #00ff99;
-      font-size: 26px;
+      color: #fff;
+      font-size: 30px;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
+    /* Time Verde com cores mais chamativas */
+    .team1 {
+      background: linear-gradient(145deg, #138d43, #e01919);
+    }
+
+    .team1 .card {
+      background: linear-gradient(135deg, #138d43, #e01919);
+      color: white;
+    }
+
+    /* Time Branco com vermelho, branco e preto */
+    .team2 {
+      background: linear-gradient(145deg, #ff0000, #ffffff);
+    }
+
+    .team2 .card {
+      background: linear-gradient(135deg, #ff0000, #000000);
+      color: white;
+    }
+
+    /* Para as zonas e cartas */
     .zona {
       margin-top: 20px;
     }
@@ -102,7 +122,7 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 15px;
       justify-items: center;
     }
@@ -114,6 +134,8 @@
       text-align: center;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-size: 20px;
+      font-weight: bold;
     }
 
     .card:hover {
