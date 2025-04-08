@@ -1,20 +1,24 @@
 const express = require('express');
 const path = require('path');
-const sorteioTimes = require('./sorteio'); // Importando o código do sorteio
+const { sortearTimes, getListaBase } = require('./sorteio'); // Importe o arquivo de sorteio.js
+
 const app = express();
+const port = process.env.PORT || 3000;
 
-// Endpoint para sortear os times
+// Servir arquivos estáticos da pasta 'public' (onde está o index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Endpoint para retornar a lista de jogadores
 app.get('/jogadores', (req, res) => {
-    const jogadores = req.query.jogadores; // Recebe os jogadores
-    const times = sorteioTimes(jogadores);  // Divide os jogadores em times
-    res.json(times);
+  res.json(getListaBase()); // Retorna a lista de jogadores do sorteio.js
 });
 
-// Página inicial (index.html dentro do public)
+// Página inicial (index.html)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Serve a página HTML
 });
 
-app.listen(3000, () => {
-    console.log(`Servidor rodando na porta 3000`);
+// Inicia o servidor
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
