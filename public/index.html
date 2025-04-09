@@ -2,30 +2,41 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sorteio de Times - Com Capitães</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorteio de Times - Tema Futebol</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
       margin: 0;
-      padding: 20px;
-      color: #333;
+      padding: 0;
+      background: linear-gradient(to right, #138d43 50%, #e01919 50%);
+      background-size: cover;
+      backdrop-filter: brightness(0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
       text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px;
+      font-size: 30px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px #000;
+      position: absolute;
+      top: 20px; /* Ajustando para não sobrepor os cards */
+      width: 100%;
     }
 
     .controls {
-      text-align: center;
-      margin-bottom: 30px;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
+      margin-top: 60px; /* Ajustando os botões para a parte superior */
+      position: absolute;
+      top: 70px;
+      width: 100%;
     }
 
     button {
@@ -36,6 +47,7 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     .kickoff {
@@ -44,75 +56,28 @@
 
     .teams-container {
       display: flex;
+      justify-content: space-evenly;
+      gap: 30px;
+      width: 100%;
       flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      margin-top: 120px; /* Ajustando para ocupar toda a tela */
     }
 
     .team {
-      width: 100%;
-      max-width: 600px;
-      background: white;
+      width: 45%;
+      background: rgba(0, 0, 0, 0.75);
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      height: fit-content;
     }
 
     .team h2 {
       text-align: center;
       margin-top: 0;
       font-size: 24px;
-      color: #111;
-    }
-
-    .zona {
-      margin-top: 20px;
-    }
-
-    .zona h3 {
-      font-size: 18px;
-      font-weight: bold;
-      color: #222;
-      margin-bottom: 10px;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 4px;
-      text-transform: uppercase;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .card {
-      background: #eee;
-      border-radius: 10px;
-      padding: 10px;
-      width: 100px;
-      text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
-    }
-
-    .team1 .card {
-      background: linear-gradient(135deg, #138d43, #e01919);
-      color: white;
-    }
-
-    .team2 .card {
-      background: linear-gradient(135deg, #ffffff, #333333);
-      color: black;
-    }
-
-    .numero {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .nome {
-      font-size: 16px;
-      font-weight: 600;
+      color: #00ff99;
+      margin-bottom: 20px;
     }
 
     .capitaes {
@@ -122,7 +87,15 @@
     .capitaes h3 {
       font-size: 18px;
       margin-bottom: 6px;
-      color: #007bff;
+      color: white;
+    }
+
+    .capitaes.team1 h3 {
+      color: green; /* Verde para time verde */
+    }
+
+    .capitaes.team2 h3 {
+      color: red; /* Vermelho para time branco */
     }
 
     .capitaes ul {
@@ -136,17 +109,80 @@
       margin-bottom: 4px;
     }
 
+    .zona {
+      margin-top: 20px;
+    }
+
+    .zona h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffd700;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .card {
+      background: #eee;
+      border-radius: 10px;
+      padding: 10px;
+      width: 80px;
+      text-align: center;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+      font-size: 14px;
+    }
+
+    .team1 .card {
+      background: linear-gradient(135deg, #138d43, #e01919);
+      color: white;
+    }
+
+    .team2 .card {
+      background: linear-gradient(135deg, #ffffff, #333333);
+      color: black;
+    }
+
+    .numero {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .nome {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+      .team {
+        width: 100%;
+      }
+    }
+
     @media screen and (max-width: 600px) {
       .card {
-        width: 80px;
+        width: 70px; /* Reduzindo um pouco mais para que se ajustem no layout pequeno */
         font-size: 12px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
       }
     }
   </style>
 </head>
 <body>
 
-<h1>Sorteio de Times</h1>
+<h1>Sorteio de Times ⚽</h1>
 
 <div class="controls">
   <button onclick="sortear()">🎲 Sortear Times</button>
@@ -157,8 +193,10 @@
 
 <div class="teams-container" id="resultado"></div>
 
-<!-- Biblioteca html2canvas para gerar a imagem -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- Bibliotecas JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sorteio.js"></script>
 
 <script>
   let jogadores = JSON.parse(localStorage.getItem("jogadores")) || [];
@@ -173,12 +211,6 @@
     "atacante",
     "centroavante"
   ];
-
-  function toggleJogadoresExtras() {
-    usarExtras = !usarExtras;
-    const btn = document.querySelector("button[onclick='toggleJogadoresExtras()']");
-    btn.textContent = usarExtras ? "Desativar jogadores extras" : "Usar jogadores adicionais";
-  }
 
   function sortear() {
     let dadosEnvio = { jogadores: [] };
