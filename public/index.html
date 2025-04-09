@@ -22,10 +22,10 @@
     h1 {
       text-align: center;
       font-size: 30px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       text-shadow: 2px 2px 4px #000;
       position: absolute;
-      top: 10px; /* Ajustando a posição do título */
+      top: 20px; /* Ajustando para não sobrepor os cards */
       width: 100%;
     }
 
@@ -33,9 +33,9 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 20px; /* Ajustando os botões para a parte superior */
+      margin-top: 60px; /* Ajustando os botões para a parte superior */
       position: absolute;
-      top: 60px;
+      top: 70px;
       width: 100%;
     }
 
@@ -60,7 +60,7 @@
       gap: 30px;
       width: 100%;
       flex-wrap: wrap;
-      margin-top: 100px;
+      margin-top: 120px; /* Ajustando para ocupar toda a tela */
     }
 
     .team {
@@ -69,6 +69,7 @@
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      height: fit-content;
     }
 
     .team h2 {
@@ -86,7 +87,15 @@
     .capitaes h3 {
       font-size: 18px;
       margin-bottom: 6px;
-      color: white; /* Mudando a cor para branco */
+      color: white;
+    }
+
+    .capitaes.team1 h3 {
+      color: green; /* Verde para time verde */
+    }
+
+    .capitaes.team2 h3 {
+      color: red; /* Vermelho para time branco */
     }
 
     .capitaes ul {
@@ -98,14 +107,6 @@
       font-size: 17px;
       font-weight: bold;
       margin-bottom: 4px;
-    }
-
-    .capitaes.team1 h3 {
-      color: green; /* Verde para time verde */
-    }
-
-    .capitaes.team2 h3 {
-      color: red; /* Vermelho para time branco */
     }
 
     .zona {
@@ -125,7 +126,7 @@
     .cards {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px; /* Aumentando o espaço entre os cards */
+      gap: 15px;
       justify-content: center;
     }
 
@@ -133,7 +134,7 @@
       background: #eee;
       border-radius: 10px;
       padding: 10px;
-      width: 80px; /* Ajuste do tamanho dos cards para que fiquem menores e ajustados */
+      width: 80px;
       text-align: center;
       box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
       font-size: 14px;
@@ -177,7 +178,6 @@
         padding: 8px 16px;
       }
     }
-
   </style>
 </head>
 <body>
