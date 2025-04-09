@@ -7,271 +7,386 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #00b140 50%, #ff0000 50%);
-      color: #fff;
+      color: #333;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       height: 100vh;
-      overflow: auto;
+      overflow: hidden;
     }
 
-    h1 {
+    .container {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      height: 90%;
+    }
+
+    .team-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #2c3e50;
+      color: white;
+      border-radius: 15px;
+      padding: 20px;
+      width: 48%;
+      height: 100%;
+    }
+
+    .team-container h2 {
       text-align: center;
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: 20px;
     }
 
-    .controls {
-      text-align: center;
-      margin-bottom: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+    .team-container .section {
+      margin: 10px 0;
     }
 
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .kickoff {
-      background: #ff9900;
-    }
-
-    .teams-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .team {
-      width: 100%;
-      max-width: 600px;
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .team h2 {
-      text-align: center;
-      margin-top: 0;
-      font-size: 24px;
-      color: #111;
-    }
-
-    .zona {
-      margin-top: 20px;
-    }
-
-    .zona h3 {
-      font-size: 18px;
-      font-weight: bold;
-      color: #222;
-      margin-bottom: 10px;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 4px;
+    .team-container .section h3 {
       text-transform: uppercase;
+      font-weight: bold;
+      font-size: 18px;
     }
 
-    .cards {
+    .team-container .section .cards {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 12px;
+      align-items: center;
     }
 
-    .card {
-      background: #eee;
-      border-radius: 10px;
+    .team-container .section .card {
+      background: #16a085;
+      color: white;
       padding: 10px;
+      border-radius: 10px;
       width: 100px;
       text-align: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
-    }
-
-    .team1 .card {
-      background: linear-gradient(135deg, #138d43, #e01919);
-      color: white;
-    }
-
-    .team2 .card {
-      background: linear-gradient(135deg, #ffffff, #333333);
-      color: black;
-    }
-
-    .numero {
-      font-size: 28px;
       font-weight: bold;
+    }
+
+    .team-container .section .card span {
+      display: block;
+      font-size: 20px;
       margin-bottom: 5px;
     }
 
-    .nome {
-      font-size: 16px;
-      font-weight: 600;
+    .team-container .section .card .player-name {
+      font-size: 12px;
+      margin-bottom: 5px;
     }
 
-    .capitaes {
-      margin-bottom: 20px;
-    }
-
-    .capitaes h3 {
+    .team-container .section .card .player-number {
       font-size: 18px;
-      margin-bottom: 6px;
-      color: #007bff;
     }
 
-    .capitaes ul {
-      margin: 0;
-      padding-left: 20px;
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
     }
 
-    .capitaes li {
-      font-size: 17px;
-      font-weight: bold;
-      margin-bottom: 4px;
+    .button-container button {
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 5px;
     }
 
-    @media screen and (max-width: 600px) {
-      .card {
-        width: 80px;
-        font-size: 12px;
+    .button-container button:hover {
+      background-color: #3498db;
+    }
+
+    .team-container .section .card.red {
+      background: #e74c3c;
+    }
+
+    .team-container .section .card.green {
+      background: #27ae60;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 100%;
+      }
+      .team-container {
+        width: 100%;
+        margin-bottom: 20px;
       }
     }
+
+    .header {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 32px;
+      color: white;
+      background: #2c3e50;
+      padding: 10px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
   </style>
 </head>
 <body>
+  <div class="header">
+    Sorteio de Times ⚽
+  </div>
 
-<h1>Sorteio de Times</h1>
+  <div class="container">
+    <!-- TIME VERDE -->
+    <div class="team-container" style="background: linear-gradient(to bottom, #27ae60, #2ecc71);">
+      <h2>TIME VERDE</h2>
+      <div class="section">
+        <h3>Capitães:</h3>
+        <div>Thiago, Guilherme Felix</div>
+      </div>
+      <div class="section">
+        <h3>GOLEIROS</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">1</span>
+            <span class="player-name">Thiago</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>ZAGUEIROS</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">3</span>
+            <span class="player-name">Romario</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">5</span>
+            <span class="player-name">Bruno Fernandes</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">13</span>
+            <span class="player-name">Luis</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">14</span>
+            <span class="player-name">Guilherme Felix</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>LATERAIS</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">2</span>
+            <span class="player-name">Gustavo</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">4</span>
+            <span class="player-name">Rael</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">16</span>
+            <span class="player-name">Mikael</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">17</span>
+            <span class="player-name">Jimmy</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>VOLANTES</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">6</span>
+            <span class="player-name">Davizinho</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">15</span>
+            <span class="player-name">Delson</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">16</span>
+            <span class="player-name">Góis</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>MEIAS</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">7</span>
+            <span class="player-name">Sakai</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">8</span>
+            <span class="player-name">Cae</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">10</span>
+            <span class="player-name">Mitter</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>ATACANTES</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">11</span>
+            <span class="player-name">Guilherme</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">19</span>
+            <span class="player-name">Carlão</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">20</span>
+            <span class="player-name">Anézio</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>CENTROAVANTES</h3>
+        <div class="cards">
+          <div class="card green">
+            <span class="player-number">9</span>
+            <span class="player-name">Diego</span>
+          </div>
+          <div class="card green">
+            <span class="player-number">23</span>
+            <span class="player-name">Scarpa</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="controls">
-  <button onclick="sortear()">🎲 Sortear Times</button>
-  <button onclick="toggleJogadoresExtras()">Usar jogadores adicionais</button>
-  <button class="kickoff">KICK-OFF</button>
-  <button onclick="baixarImagem()">📸 Salvar como Imagem (.JPG)</button>
-</div>
-
-<div class="teams-container" id="resultado"></div>
-
-<!-- Biblioteca html2canvas para gerar a imagem -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-<script>
-  let jogadores = JSON.parse(localStorage.getItem("jogadores")) || [];
-  let usarExtras = false;
-
-  const ordemZonas = [
-    "goleiro",
-    "zagueiro",
-    "lateral",
-    "volante",
-    "meia",
-    "atacante",
-    "centroavante"
-  ];
-
-  function toggleJogadoresExtras() {
-    usarExtras = !usarExtras;
-    const btn = document.querySelector("button[onclick='toggleJogadoresExtras()']");
-    btn.textContent = usarExtras ? "Desativar jogadores extras" : "Usar jogadores adicionais";
-  }
-
-  function sortear() {
-    let dadosEnvio = { jogadores: [] };
-    fetch('/jogadoresBase')
-      .then(res => res.json())
-      .then(base => {
-        dadosEnvio.jogadores = usarExtras ? [...base, ...jogadores] : base;
-        enviarParaSorteio(dadosEnvio);
-      });
-  }
-
-  function enviarParaSorteio(dados) {
-    fetch('/sortear', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
-    })
-    .then(res => res.json())
-    .then(dados => {
-      const container = document.getElementById("resultado");
-      container.innerHTML = "";
-
-      Object.entries(dados).forEach(([time, setores], i) => {
-        const teamDiv = document.createElement("div");
-        const teamName = i === 0 ? "TIME VERDE" : "TIME BRANCO";
-        const teamClass = i === 0 ? "team team1" : "team team2";
-
-        teamDiv.className = teamClass;
-        teamDiv.innerHTML = `<h2>${teamName}</h2>`;
-
-        // Selecionar jogadores para capitães
-        const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
-        const capitaes = escolherCapitaes(todosJogadores, 2);
-
-        const capDiv = document.createElement("div");
-        capDiv.className = "capitaes";
-        capDiv.innerHTML = `<h3>🧢 Capitães:</h3><ul>${capitaes.map(c => `<li>${c}</li>`).join('')}</ul>`;
-        teamDiv.appendChild(capDiv);
-
-        ordemZonas.forEach(pos => {
-          if (setores[pos]) {
-            const zonaDiv = document.createElement("div");
-            zonaDiv.className = "zona";
-            zonaDiv.innerHTML = `<h3>${pos.toUpperCase()}${pos.endsWith("e") ? "S" : "S"}</h3><div class="cards"></div>`;
-
-            const cardsContainer = zonaDiv.querySelector(".cards");
-
-            setores[pos].forEach(jogadorStr => {
-              const [numero, ...resto] = jogadorStr.split(" - ");
-              const nome = resto.join(" - ");
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `
-                <div class="numero">${numero}</div>
-                <div class="nome">${nome}</div>
-              `;
-              cardsContainer.appendChild(card);
-            });
-
-            teamDiv.appendChild(zonaDiv);
-          }
-        });
-
-        container.appendChild(teamDiv);
-      });
-    });
-  }
-
-  function escolherCapitaes(lista, quantia) {
-    const copia = [...lista];
-    const sorteados = [];
-    while (sorteados.length < quantia && copia.length > 0) {
-      const idx = Math.floor(Math.random() * copia.length);
-      sorteados.push(copia.splice(idx, 1)[0]);
-    }
-    return sorteados;
-  }
-
-  function baixarImagem() {
-    const alvo = document.getElementById('resultado');
-    html2canvas(alvo).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "sorteio-times.jpg";
-      link.href = canvas.toDataURL("image/jpeg", 1.0);
-      link.click();
-    });
-  }
-</script>
-
+    <!-- TIME BRANCO -->
+    <div class="team-container" style="background: linear-gradient(to bottom, #c0392b, #e74c3c);">
+      <h2>TIME BRANCO</h2>
+      <div class="section">
+        <h3>Capitães:</h3>
+        <div>Diego, Guilherme</div>
+      </div>
+      <div class="section">
+        <h3>GOLEIROS</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">1</span>
+            <span class="player-name">Thiago</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>ZAGUEIROS</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">3</span>
+            <span class="player-name">Romario</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">5</span>
+            <span class="player-name">Guilherme Felix</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">13</span>
+            <span class="player-name">Wesley</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">14</span>
+            <span class="player-name">Fagner</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>LATERAIS</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">2</span>
+            <span class="player-name">Henrique</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">4</span>
+            <span class="player-name">Jimmy</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">16</span>
+            <span class="player-name">Rael</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>VOLANTES</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">6</span>
+            <span class="player-name">Gah</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">15</span>
+            <span class="player-name">Thiago</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">16</span>
+            <span class="player-name">Armiero</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>MEIAS</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">7</span>
+            <span class="player-name">Sakai</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">8</span>
+            <span class="player-name">Davi</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">10</span>
+            <span class="player-name">Jaques</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>ATACANTES</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">11</span>
+            <span class="player-name">Felix</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">19</span>
+            <span class="player-name">Luis</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">21</span>
+            <span class="player-name">Madruguinha</span>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>CENTROAVANTES</h3>
+        <div class="cards">
+          <div class="card red">
+            <span class="player-number">9</span>
+            <span class="player-name">Pastor</span>
+          </div>
+          <div class="card red">
+            <span class="player-number">23</span>
+            <span class="player-name">Scarpa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
