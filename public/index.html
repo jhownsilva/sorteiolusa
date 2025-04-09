@@ -25,7 +25,7 @@
       margin-bottom: 20px;
       text-shadow: 2px 2px 4px #000;
       position: absolute;
-      top: 10px; /* Posiciona o título acima dos botões */
+      top: 10px; /* Ajustando a posição do título */
       width: 100%;
     }
 
@@ -33,7 +33,7 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 20px; /* Colocando os botões na parte superior */
+      margin-top: 20px; /* Ajustando os botões para a parte superior */
       position: absolute;
       top: 60px;
       width: 100%;
@@ -57,7 +57,7 @@
     .teams-container {
       display: flex;
       justify-content: space-evenly;
-      gap: 50px;
+      gap: 30px;
       width: 100%;
       flex-wrap: wrap;
       margin-top: 100px;
@@ -100,6 +100,14 @@
       margin-bottom: 4px;
     }
 
+    .capitaes.team1 h3 {
+      color: green; /* Verde para time verde */
+    }
+
+    .capitaes.team2 h3 {
+      color: red; /* Vermelho para time branco */
+    }
+
     .zona {
       margin-top: 20px;
     }
@@ -125,7 +133,7 @@
       background: #eee;
       border-radius: 10px;
       padding: 10px;
-      width: 100px; /* Ajuste do tamanho dos cards */
+      width: 80px; /* Ajuste do tamanho dos cards para que fiquem menores e ajustados */
       text-align: center;
       box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
       font-size: 14px;
@@ -160,7 +168,7 @@
 
     @media screen and (max-width: 600px) {
       .card {
-        width: 80px;
+        width: 70px; /* Reduzindo um pouco mais para que se ajustem no layout pequeno */
         font-size: 12px;
       }
 
