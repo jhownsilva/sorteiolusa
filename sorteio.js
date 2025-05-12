@@ -1,7 +1,7 @@
 const jogadores = [
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
-  { nome: "Félix Gustavinho", posicao: "atacante", ranking: 3 },
+  { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
   { nome: "Luis", posicao: "atacante", ranking: 3 },
   { nome: "Madruguinha", posicao: "atacante", ranking: 4 },
@@ -11,7 +11,7 @@ const jogadores = [
   { nome: "Scarpa", posicao: "centroavante", ranking: 2 },
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Jorel", posicao: "lateral", ranking: 3 },
-  { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Jimmy", posicao: "lateral", ranking: 2 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
   { nome: "Aelton", posicao: "lateral", ranking: 1 },
@@ -28,9 +28,9 @@ const jogadores = [
   { nome: "Góis", posicao: "volante", ranking: 3 },
   { nome: "Gah", posicao: "volante", ranking: 2 },
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
-  { nome: "Thiago", posicao: "volante", ranking: 2 },
+  { nome: "Fillipi", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Kaio", posicao: "volante", ranking: 1 },
+  { nome: "Kaio", posicao: "volante", ranking: 5 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -43,21 +43,21 @@ const jogadores = [
   { nome: "Filipe", posicao: "goleiro", ranking: 5 }
 ];
 
-// Mapeamento de números fixos por jogador (1 goleiro, 1 atacante, 1 zagueiro, 1 volante)
+// Mapeamento de números fixos por jogador (fixos)
 const jogadoresComNumeroFixo = {
-  "Madruguinha": 20, // Atacante fixo
-  "Guilherme Felix": 19, // Zagueiro fixo
-  "Jackson": 21  // Volante fixo
+  "Guilherme Felix": 19, // Zagueiro
+  "Jackson": 21, // Volante
+  "Madriguinha": 20    // Atacante
 };
 
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
-  goleiro: [1, 2], // Goleiro, fixo já atribuído
-  zagueiro: [3, 5, 13, 19],
-  lateral: [2, 4, 16, 14],
-  volante: [6, 15, 16, 21],
+  goleiro: [1],
+  zagueiro: [3, 4, 13, 12],
+  lateral: [2, 6, 16,],
+  volante: [5, 15, 16, 14],
   meia: [7, 8, 10, 22],
-  atacante: [11, 17, 20, 18],
+  atacante: [11, 17, 18, 24],
   centroavante: [9, 23]
 };
 
