@@ -1,7 +1,7 @@
 const jogadores = [
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
-  { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
+  { nome: "Félix Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
   { nome: "Luis", posicao: "atacante", ranking: 3 },
   { nome: "Madruguinha", posicao: "atacante", ranking: 4 },
@@ -11,17 +11,17 @@ const jogadores = [
   { nome: "Scarpa", posicao: "centroavante", ranking: 2 },
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Jorel", posicao: "lateral", ranking: 3 },
-  { nome: "Jimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
   { nome: "Aelton", posicao: "lateral", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
+  { nome: "Kaio", posicao: "lateral", ranking: 1 },
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
   { nome: "Davi", posicao: "meia", ranking: 4 },
   { nome: "Cae", posicao: "meia", ranking: 2 },
   { nome: "Sakai", posicao: "meia", ranking: 1 },
-  { nome: "Jackson", posicao: "meia", ranking: 3 },
   { nome: "Mitter", posicao: "meia", ranking: 2 },
   { nome: "Delson", posicao: "volante", ranking: 5 },
   { nome: "Davizinho", posicao: "volante", ranking: 4 },
@@ -30,7 +30,7 @@ const jogadores = [
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
   { nome: "Fillipi", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Kaio", posicao: "volante", ranking: 5 },
+  { nome: "Jackson", posicao: "volante", ranking: 3 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -43,21 +43,21 @@ const jogadores = [
   { nome: "Filipe", posicao: "goleiro", ranking: 5 }
 ];
 
-// Mapeamento de números fixos por jogador (fixos)
+// Mapeamento de números fixos por jogador (1 atacante, 1 zagueiro, 1 volante)
 const jogadoresComNumeroFixo = {
-  "Guilherme Felix": 19, // Zagueiro
-  "Jackson": 21, // Volante
-  "Madriguinha": 20    // Atacante
+  "Madruguinha": 20, // Atacante fixo
+  "Guilherme Felix": 19, // Zagueiro fixo
+  "Jackson": 21  // Volante fixo
 };
 
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
-  goleiro: [1],
-  zagueiro: [3, 4, 13, 12],
-  lateral: [2, 6, 16,],
-  volante: [5, 15, 16, 14],
+  goleiro: [1, 2], // Goleiro, fixo já atribuído
+  zagueiro: [3, 5, 13], // Excluindo 19
+  lateral: [2, 4, 16],
+  volante: [6, 15, 16], // Excluindo 21
   meia: [7, 8, 10, 22],
-  atacante: [11, 17, 18, 24],
+  atacante: [11, 17, 18, 14], // Excluindo 20
   centroavante: [9, 23]
 };
 
@@ -132,8 +132,4 @@ function sortearTimes(jogadores, numTimes = 2) {
   return resultado;
 }
 
-function getListaBase() {
-  return jogadores;
-}
-
-module.exports = { sortearTimes, getListaBase };
+console.log(sortearTimes(jogadores));
