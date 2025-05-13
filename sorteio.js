@@ -130,3 +130,5 @@ function sortearTimes(jogadores, numTimes = 2) {
 function getListaBase() {
   return jogadores;
 }
+
+module.exports = { sortearTimes, getListaBase };
