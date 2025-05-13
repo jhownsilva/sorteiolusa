@@ -1,4 +1,5 @@
 const jogadores = [
+  // ➕ Cole sua lista completa de jogadores aqui (já configurada com nome, posicao e ranking)
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
@@ -11,10 +12,11 @@ const jogadores = [
   { nome: "Scarpa", posicao: "centroavante", ranking: 2 },
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Jorel", posicao: "lateral", ranking: 3 },
-  { nome: "Jimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Aelton", posicao: "lateral", ranking: 4 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
-  { nome: "Aelton", posicao: "lateral", ranking: 1 },
+  { nome: "Kaio", posicao: "lateral", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
@@ -30,7 +32,6 @@ const jogadores = [
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
   { nome: "Fillipi", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Kaio", posicao: "volante", ranking: 5 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -43,21 +44,21 @@ const jogadores = [
   { nome: "Filipe", posicao: "goleiro", ranking: 5 }
 ];
 
-// Mapeamento de números fixos por jogador (fixos)
 const jogadoresComNumeroFixo = {
-  "Guilherme Felix": 19, // Zagueiro
-  "Jackson": 21, // Volante
-  "Madriguinha": 20    // Atacante
+  'Guilherme Felix': 19,
+  'Madruguinha': 20,
+  'Jackson': 21,
+  // e assim por diante, para todos os jogadores...
 };
 
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
-  zagueiro: [3, 4, 13, 12],
-  lateral: [2, 6, 16,],
-  volante: [5, 15, 16, 14],
+  zagueiro: [3, 4, 13, 14],
+  lateral: [2, 6, 16, 12],
+  volante: [5, 15, 16, 18],
   meia: [7, 8, 10, 22],
-  atacante: [11, 17, 18, 24],
+  atacante: [11, 14, 17],
   centroavante: [9, 23]
 };
 
@@ -103,7 +104,7 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // ✅ Aplicar numeração personalizada individual para cada time (fixo para alguns jogadores)
+  // ✅ Aplicar numeração personalizada individual para cada time
   const resultado = {};
 
   times.forEach((time, i) => {
@@ -113,20 +114,14 @@ function sortearTimes(jogadores, numTimes = 2) {
       // Copia os números permitidos dessa zona para esse time
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
-        let numero;
-        // Se o jogador tem número fixo, usa o número fixo
-        if (jogadoresComNumeroFixo[jogador.nome]) {
-          numero = jogadoresComNumeroFixo[jogador.nome];
-        } else {
-          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
-        }
-        return `${numero ?? '#'} - ${jogador.nome}`;
+        const numero = numerosDisponiveis.shift();
+        return ${numero ?? '#'} - ${jogador.nome};
       });
 
       timeFinal[posicao] = jogadoresComNumero;
     }
 
-    resultado[`time${i + 1}`] = timeFinal;
+    resultado[time${i + 1}] = timeFinal;
   });
 
   return resultado;
@@ -135,5 +130,3 @@ function sortearTimes(jogadores, numTimes = 2) {
 function getListaBase() {
   return jogadores;
 }
-
-module.exports = { sortearTimes, getListaBase };
