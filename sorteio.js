@@ -12,10 +12,9 @@ const jogadores = [
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Jorel", posicao: "lateral", ranking: 3 },
   { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
-  { nome: "Aelton", posicao: "lateral", ranking: 4 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
-  { nome: "Kaio", posicao: "lateral", ranking: 1 },
+  { nome: "Aelton", posicao: "lateral", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
@@ -29,8 +28,9 @@ const jogadores = [
   { nome: "Góis", posicao: "volante", ranking: 3 },
   { nome: "Gah", posicao: "volante", ranking: 2 },
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
-  { nome: "Fillipi", posicao: "volante", ranking: 2 },
+  { nome: "Thiago", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
+  { nome: "Kaio", posicao: "volante", ranking: 1 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -102,32 +102,31 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // ✅ Aplicar numeração personalizada individual para cada time
+  // Exibir os times sorteados
   const resultado = {};
-
   times.forEach((time, i) => {
     const timeFinal = {};
-
     for (let posicao in time) {
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
         let numero;
-        // Se o jogador tem número fixo, usa o número fixo
         if (jogadoresComNumeroFixo[jogador.nome]) {
           numero = jogadoresComNumeroFixo[jogador.nome];
         } else {
-          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
+          numero = numerosDisponiveis.shift();
         }
         return `${numero ?? '#'} - ${jogador.nome}`;
       });
-
       timeFinal[posicao] = jogadoresComNumero;
     }
-
     resultado[`time${i + 1}`] = timeFinal;
   });
 
   return resultado;
 }
 
-console.log(sortearTimes(jogadores));
+document.getElementById('sortearBtn').addEventListener('click', function() {
+  const resultado = sortearTimes(jogadores);
+  const timesDisplay = document.getElementById('timesDisplay');
+  timesDisplay.innerHTML = JSON.stringify(resultado, null, 2);
+});
