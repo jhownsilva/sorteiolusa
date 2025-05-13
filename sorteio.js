@@ -1,7 +1,8 @@
 const jogadores = [
+  // ➕ Cole sua lista completa de jogadores aqui (já configurada com nome, posicao e ranking)
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
-  { nome: "Félix Gustavinho", posicao: "atacante", ranking: 3 },
+  { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
   { nome: "Luis", posicao: "atacante", ranking: 3 },
   { nome: "Madruguinha", posicao: "atacante", ranking: 4 },
@@ -12,16 +13,17 @@ const jogadores = [
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Jorel", posicao: "lateral", ranking: 3 },
   { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Aelton", posicao: "lateral", ranking: 4 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
-  { nome: "Aelton", posicao: "lateral", ranking: 1 },
-  { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Kaio", posicao: "lateral", ranking: 1 },
+  { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
   { nome: "Davi", posicao: "meia", ranking: 4 },
   { nome: "Cae", posicao: "meia", ranking: 2 },
   { nome: "Sakai", posicao: "meia", ranking: 1 },
+  { nome: "Jackson", posicao: "meia", ranking: 3 },
   { nome: "Mitter", posicao: "meia", ranking: 2 },
   { nome: "Delson", posicao: "volante", ranking: 5 },
   { nome: "Davizinho", posicao: "volante", ranking: 4 },
@@ -30,7 +32,6 @@ const jogadores = [
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
   { nome: "Fillipi", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Jackson", posicao: "volante", ranking: 3 },
   { nome: "Willian", posicao: "zagueiro", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Wesley", posicao: "zagueiro", ranking: 5 },
@@ -43,21 +44,21 @@ const jogadores = [
   { nome: "Filipe", posicao: "goleiro", ranking: 5 }
 ];
 
-// Mapeamento de números fixos por jogador (1 atacante, 1 zagueiro, 1 volante)
 const jogadoresComNumeroFixo = {
-  "Madruguinha": 20, // Atacante fixo
-  "Guilherme Felix": 19, // Zagueiro fixo
-  "Jackson": 21  // Volante fixo
+  'Guilherme Felix': 19,
+  'Madruguinha': 20,
+  'Jackson': 21,
+  // e assim por diante, para todos os jogadores...
 };
 
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
-  goleiro: [1, 2], // Goleiro, fixo já atribuído
-  zagueiro: [3, 5, 13], // Excluindo 19
-  lateral: [2, 4, 16],
-  volante: [6, 15, 16], // Excluindo 21
+  goleiro: [1],
+  zagueiro: [3, 4, 13, 14],
+  lateral: [2, 6, 16, 12],
+  volante: [5, 15, 16, 18],
   meia: [7, 8, 10, 22],
-  atacante: [11, 17, 18, 14], // Excluindo 20
+  atacante: [11, 14, 17],
   centroavante: [9, 23]
 };
 
@@ -103,7 +104,7 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // ✅ Aplicar numeração personalizada individual para cada time (fixo para alguns jogadores)
+  // ✅ Aplicar numeração personalizada individual para cada time
   const resultado = {};
 
   times.forEach((time, i) => {
@@ -113,23 +114,19 @@ function sortearTimes(jogadores, numTimes = 2) {
       // Copia os números permitidos dessa zona para esse time
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
-        let numero;
-        // Se o jogador tem número fixo, usa o número fixo
-        if (jogadoresComNumeroFixo[jogador.nome]) {
-          numero = jogadoresComNumeroFixo[jogador.nome];
-        } else {
-          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
-        }
-        return `${numero ?? '#'} - ${jogador.nome}`;
+        const numero = numerosDisponiveis.shift();
+        return ${numero ?? '#'} - ${jogador.nome};
       });
 
       timeFinal[posicao] = jogadoresComNumero;
     }
 
-    resultado[`time${i + 1}`] = timeFinal;
+    resultado[time${i + 1}] = timeFinal;
   });
 
   return resultado;
 }
 
-console.log(sortearTimes(jogadores));
+function getListaBase() {
+  return jogadores;
+}
