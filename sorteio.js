@@ -1,5 +1,4 @@
 const jogadores = [
-  // ➕ Cole sua lista completa de jogadores aqui (já configurada com nome, posicao e ranking)
   { nome: "Guilherme", posicao: "atacante", ranking: 5 },
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
@@ -48,7 +47,6 @@ const jogadoresComNumeroFixo = {
   'Guilherme Felix': 19,
   'Madruguinha': 20,
   'Jackson': 21,
-  // e assim por diante, para todos os jogadores...
 };
 
 // 🎯 Números por zona (reutilizável por time)
@@ -111,24 +109,25 @@ function sortearTimes(jogadores, numTimes = 2) {
     const timeFinal = {};
 
     for (let posicao in time) {
-      // Copia os números permitidos dessa zona para esse time
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
-        const numero = numerosDisponiveis.shift();
-        return ${numero ?? '#'} - ${jogador.nome};
+        let numero;
+        // Se o jogador tem número fixo, usa o número fixo
+        if (jogadoresComNumeroFixo[jogador.nome]) {
+          numero = jogadoresComNumeroFixo[jogador.nome];
+        } else {
+          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
+        }
+        return `${numero ?? '#'} - ${jogador.nome}`;
       });
 
       timeFinal[posicao] = jogadoresComNumero;
     }
 
-    resultado[time${i + 1}] = timeFinal;
+    resultado[`time${i + 1}`] = timeFinal;
   });
 
   return resultado;
 }
 
-function getListaBase() {
-  return jogadores;
-}
-
-module.exports = { sortearTimes, getListaBase };
+console.log(sortearTimes(jogadores));
