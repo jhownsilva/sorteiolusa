@@ -102,31 +102,37 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // Exibir os times sorteados
+  // ✅ Aplicar numeração personalizada individual para cada time (fixo para alguns jogadores)
   const resultado = {};
+
   times.forEach((time, i) => {
     const timeFinal = {};
+
     for (let posicao in time) {
+      // Copia os números permitidos dessa zona para esse time
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
         let numero;
+        // Se o jogador tem número fixo, usa o número fixo
         if (jogadoresComNumeroFixo[jogador.nome]) {
           numero = jogadoresComNumeroFixo[jogador.nome];
         } else {
-          numero = numerosDisponiveis.shift();
+          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
         }
         return `${numero ?? '#'} - ${jogador.nome}`;
       });
+
       timeFinal[posicao] = jogadoresComNumero;
     }
+
     resultado[`time${i + 1}`] = timeFinal;
   });
 
   return resultado;
 }
 
-document.getElementById('sortearBtn').addEventListener('click', function() {
-  const resultado = sortearTimes(jogadores);
-  const timesDisplay = document.getElementById('timesDisplay');
-  timesDisplay.innerHTML = JSON.stringify(resultado, null, 2);
-});
+function getListaBase() {
+  return jogadores;
+}
+
+module.exports = { sortearTimes, getListaBase };
