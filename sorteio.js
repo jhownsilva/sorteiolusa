@@ -52,10 +52,10 @@ const jogadoresComNumeroFixo = {
 const faixaNumeros = {
   goleiro: [1],
   zagueiro: [3, 4, 13, 12],
-  lateral: [2, 6, 16, 14],
+  lateral: [2, 6, 14, 12],
   volante: [5, 15, 16, 22],
   meia: [18, 8, 10],
-  atacante: [11, 7, 17],
+  atacante: [11, 7, 17, 23],
   centroavante: [9, 23]
 };
 
