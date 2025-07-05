@@ -51,11 +51,11 @@ const jogadoresComNumeroFixo = {
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
-  zagueiro: [3, 4, 13],
+  zagueiro: [3, 4, 13, 12],
   lateral: [2, 6, 14, 22],
-  volante: [5, 15, 16],
+  volante: [5, 15, 16, 24],
   meia: [18, 8, 10],
-  atacante: [11, 7, 17],
+  atacante: [11, 7, 17, 25],
   centroavante: [9, 23]
 };
 
