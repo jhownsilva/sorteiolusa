@@ -4,7 +4,7 @@ const jogadores = [
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
   { nome: "Luis", posicao: "atacante", ranking: 3 },
-  { nome: "Madruguinha", posicao: "centroavante", ranking: 4 },
+  { nome: "Madruguinha", posicao: "atacante", ranking: 4 },
   { nome: "Fabio", posicao: "atacante", ranking: 1 },
   { nome: "Pastor", posicao: "centroavante", ranking: 3 },
   { nome: "Diego", posicao: "centroavante", ranking: 4 },
@@ -13,7 +13,7 @@ const jogadores = [
   { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
-  { nome: "Lucas", posicao: "atacante", ranking: 1 },
+  { nome: "Lucas", posicao: "centroavante", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
@@ -51,11 +51,11 @@ const jogadoresComNumeroFixo = {
 // 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
-  zagueiro: [3, 4, 13, 12],
-  lateral: [2, 6, 14, 12],
-  volante: [5, 15, 16, 22],
+  zagueiro: [3, 4, 13],
+  lateral: [2, 6, 14, 22],
+  volante: [5, 15, 16],
   meia: [18, 8, 10],
-  atacante: [11, 7, 17, 23],
+  atacante: [11, 7, 17],
   centroavante: [9, 23]
 };
 
