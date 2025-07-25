@@ -11,6 +11,7 @@ const jogadores = [
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
   { nome: "Caio", posicao: "lateral", ranking: 3 },
   { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
+  { nome: "Breno", posicao: "lateral", ranking: 4 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
   { nome: "Lucas", posicao: "centroavante", ranking: 1 },
@@ -52,7 +53,7 @@ const jogadoresComNumeroFixo = {
 const faixaNumeros = {
   goleiro: [1],
   zagueiro: [3, 4, 13, 12],
-  lateral: [2, 6, 14, 22],
+  lateral: [2, 6, 14, 22, 26],
   volante: [5, 15, 16, 24],
   meia: [18, 8, 10],
   atacante: [11, 7, 17, 25],
