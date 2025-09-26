@@ -2,7 +2,8 @@ const jogadores = [
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
-  { nome: "Luis", posicao: "atacante", ranking: 3 },
+  { nome: "Luis Henrique", posicao: "atacante", ranking: 3 },
+  { nome: "Guilherme", posicao: "atacante", ranking: 3 },
   { nome: "Fabio", posicao: "atacante", ranking: 1 },
   { nome: "Pastor", posicao: "centroavante", ranking: 3 },
   { nome: "Diego", posicao: "centroavante", ranking: 4 },
@@ -36,6 +37,7 @@ const jogadores = [
   { nome: "Guilherme Felix", posicao: "zagueiro", ranking: 3 },
   { nome: "Fagner", posicao: "zagueiro", ranking: 4 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 2 },
+  { nome: "Luiz", posicao: "zagueiro", ranking: 2 },
   { nome: "Thiago", posicao: "goleiro", ranking: 4 },
   { nome: "Filipe", posicao: "goleiro", ranking: 5 },
 ];
