@@ -3,7 +3,6 @@ const jogadores = [
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
   { nome: "Luis", posicao: "atacante", ranking: 3 },
-  { nome: "Madruguinha", posicao: "atacante", ranking: 4 },
   { nome: "Fabio", posicao: "atacante", ranking: 1 },
   { nome: "Pastor", posicao: "centroavante", ranking: 3 },
   { nome: "Diego", posicao: "centroavante", ranking: 4 },
