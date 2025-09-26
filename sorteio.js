@@ -38,7 +38,7 @@ const jogadores = [
   { nome: "Fagner", posicao: "zagueiro", ranking: 4 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 2 },
   { nome: "Thiago", posicao: "goleiro", ranking: 4 },
-  { nome: "Filipe", posicao: "goleiro", ranking: 5 }
+  { nome: "Filipe", posicao: "goleiro", ranking: 5 },
 ];
 
 const jogadoresComNumeroFixo = {
@@ -46,7 +46,6 @@ const jogadoresComNumeroFixo = {
   'Jackson': 21,
 };
 
-// 🎯 Números por zona (reutilizável por time)
 const faixaNumeros = {
   goleiro: [1],
   zagueiro: [3, 4, 13, 12],
@@ -54,7 +53,7 @@ const faixaNumeros = {
   volante: [5, 15, 16, 24],
   meia: [18, 8, 10],
   atacante: [11, 7, 17, 25],
-  centroavante: [9, 23]
+  centroavante: [9, 23],
 };
 
 function embaralhar(array) {
@@ -64,15 +63,17 @@ function embaralhar(array) {
 function sortearTimes(jogadores, numTimes = 2) {
   const porPosicao = {};
   jogadores.forEach(jogador => {
-    if (!porPosicao[jogador.posicao]) porPosicao[jogador.posicao] = [];
-    porPosicao[jogador.posicao].push(jogador);
+    const { posicao } = jogador;
+    if (!porPosicao[posicao]) {
+      porPosicao[posicao] = [];
+    }
+    porPosicao[posicao].push(jogador);
   });
 
   const times = Array.from({ length: numTimes }, () => ({}));
 
-  for (let posicao in porPosicao) {
-    let lista = [...porPosicao[posicao]];
-    lista = embaralhar(lista.sort((a, b) => b.ranking - a.ranking));
+  for (const posicao in porPosicao) {
+    const lista = embaralhar(porPosicao[posicao].sort((a, b) => b.ranking - a.ranking));
 
     const total = lista.length;
     const base = Math.floor(total / numTimes);
@@ -81,7 +82,7 @@ function sortearTimes(jogadores, numTimes = 2) {
     const ordemExtras = embaralhar([...Array(numTimes).keys()]);
     const limites = Array(numTimes).fill(base);
     for (let i = 0; i < extras; i++) {
-      limites[ordemExtras[i]] += 1;
+      limites[ordemExtras[i]]++;
     }
 
     const distribuicao = Array.from({ length: numTimes }, () => []);
@@ -99,29 +100,25 @@ function sortearTimes(jogadores, numTimes = 2) {
     });
   }
 
-  // ✅ Aplicar numeração personalizada individual para cada time (fixo para alguns jogadores)
   const resultado = {};
 
   times.forEach((time, i) => {
     const timeFinal = {};
 
-    for (let posicao in time) {
-      // Copia os números permitidos dessa zona para esse time
+    for (const posicao in time) {
       const numerosDisponiveis = [...(faixaNumeros[posicao.toLowerCase()] || [])];
       const jogadoresComNumero = time[posicao].map(jogador => {
+        const { nome } = jogador;
         let numero;
-        // Se o jogador tem número fixo, usa o número fixo
-        if (jogadoresComNumeroFixo[jogador.nome]) {
-          numero = jogadoresComNumeroFixo[jogador.nome];
+        if (jogadoresComNumeroFixo[nome]) {
+          numero = jogadoresComNumeroFixo[nome];
         } else {
-          numero = numerosDisponiveis.shift(); // Caso contrário, atribui um número disponível
+          numero = numerosDisponiveis.shift();
         }
-        return `${numero ?? '#'} - ${jogador.nome}`;
+        return `${numero ?? '#'} - ${nome}`;
       });
-
       timeFinal[posicao] = jogadoresComNumero;
     }
-
     resultado[`time${i + 1}`] = timeFinal;
   });
 
