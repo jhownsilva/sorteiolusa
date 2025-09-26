@@ -1,5 +1,4 @@
-const jogadores = [
-  { nome: "Guilherme", posicao: "atacante", ranking: 5 },
+const jogadores =
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
@@ -19,10 +18,10 @@ const jogadores = [
   { nome: "Jaques", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
   { nome: "Cae", posicao: "meia", ranking: 2 },
+  { nome: "Joao Pedro", posicao: "meia", ranking: 2 },
   { nome: "Le", posicao: "meia", ranking: 2 },
   { nome: "Sakai", posicao: "meia", ranking: 1 },
   { nome: "Jackson", posicao: "volante", ranking: 3 },
-  { nome: "Mitter", posicao: "meia", ranking: 2 },
   { nome: "Wesley", posicao: "volante", ranking: 5 },
   { nome: "Davizinho", posicao: "volante", ranking: 4 },
   { nome: "Madson", posicao: "lateral", ranking: 3 },
@@ -30,13 +29,12 @@ const jogadores = [
   { nome: "Rafinha", posicao: "volante", ranking: 3 },
   { nome: "Fillipi", posicao: "volante", ranking: 2 },
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
-  { nome: "Kaio", posicao: "lateral", ranking: 1 },
+  { nome: "André", posicao: "lateral", ranking: 1 },
   { nome: "Willian", posicao: "volante", ranking: 4 },
   { nome: "Dé", posicao: "zagueiro", ranking: 3 },
   { nome: "Delson", posicao: "zagueiro", ranking: 5 },
   { nome: "Bruno Fernandes", posicao: "zagueiro", ranking: 2 },
   { nome: "Guilherme Felix", posicao: "zagueiro", ranking: 3 },
-  { nome: "Romario", posicao: "zagueiro", ranking: 1 },
   { nome: "Fagner", posicao: "zagueiro", ranking: 4 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 2 },
   { nome: "Thiago", posicao: "goleiro", ranking: 4 },
@@ -45,7 +43,6 @@ const jogadores = [
 
 const jogadoresComNumeroFixo = {
   'Guilherme Felix': 19,
-  'Madruguinha': 20,
   'Jackson': 21,
 };
 
