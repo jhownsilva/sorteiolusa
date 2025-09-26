@@ -1,4 +1,4 @@
-const jogadores = 
+const jogadores = [
   { nome: "Carlão", posicao: "atacante", ranking: 4 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 3 },
   { nome: "Anézio", posicao: "atacante", ranking: 2 },
