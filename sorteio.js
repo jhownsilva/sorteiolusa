@@ -21,7 +21,6 @@ const jogadores = [
   { nome: "Le", posicao: "meia", ranking: 2 },
   { nome: "Renan", posicao: "meia", ranking: 2 },
   { nome: "Erick Canobbio", posicao: "meia", ranking: 2 },
-  { nome: "Andre", posicao: "Lateral", ranking: 1 },
   { nome: "Jackson", posicao: "volante", ranking: 3 },
   { nome: "Wesley", posicao: "volante", ranking: 5 },
   { nome: "Nathan Eneas", posicao: "volante", ranking: 4 },
