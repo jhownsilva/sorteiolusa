@@ -54,8 +54,8 @@ const faixaNumeros = {
   zagueiro: [3, 4, 13, 12],
   lateral: [2, 6, 14, 25, 26],
   volante: [5, 15, 16, 24],
-  meia: [18, 8, 10],
-  atacante: [11, 7, 17],
+  meia: [18, 8, 10, 17],
+  atacante: [11, 7, 27],
   centroavante: [9, 23, 22],
 };
 
