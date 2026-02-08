@@ -14,12 +14,14 @@ const jogadores = [
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
   { nome: "Mikael", posicao: "lateral", ranking: 3 },
   { nome: "Lucas", posicao: "centroavante", ranking: 1 },
+  { nome: "Madruguinha", posicao: "centroavante", ranking: 1 },
   { nome: "Edberto", posicao: "centroavante", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Fabão", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
   { nome: "Cae", posicao: "meia", ranking: 2 },
   { nome: "Le", posicao: "meia", ranking: 2 },
+  { nome: "Gah", posicao: "meia", ranking: 2 },
   { nome: "Renan", posicao: "meia", ranking: 2 },
   { nome: "Erick Samurai", posicao: "meia", ranking: 2 },
   { nome: "Jackson", posicao: "meia", ranking: 3 },
@@ -47,6 +49,7 @@ const jogadores = [
 const jogadoresComNumeroFixo = {
   'Guilherme Felix': 19,
   'Jackson': 21,
+  'Madruguinha': 20,
 };
 
 const faixaNumeros = {
