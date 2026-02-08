@@ -18,6 +18,7 @@ const jogadores = [
   { nome: "Edberto", posicao: "centroavante", ranking: 1 },
   { nome: "Henrique", posicao: "lateral", ranking: 2 },
   { nome: "Fabão", posicao: "meia", ranking: 4 },
+  { nome: "Sakai", posicao: "meia", ranking: 4 },
   { nome: "Ventura", posicao: "meia", ranking: 3 },
   { nome: "Cae", posicao: "meia", ranking: 2 },
   { nome: "Le", posicao: "meia", ranking: 2 },
