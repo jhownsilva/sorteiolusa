@@ -8,7 +8,7 @@ const jogadores = [
   { nome: "Pastor", posicao: "centroavante", ranking: 3 },
   { nome: "Diego", posicao: "centroavante", ranking: 4 },
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 5 },
-  { nome: "Caio", posicao: "lateral", ranking: 3 },
+  { nome: "Caio", posicao: "atacante", ranking: 3 },
   { nome: "Jhimmy", posicao: "lateral", ranking: 2 },
   { nome: "Breno", posicao: "lateral", ranking: 4 },
   { nome: "Gustavo", posicao: "lateral", ranking: 5 },
