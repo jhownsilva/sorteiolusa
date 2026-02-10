@@ -59,7 +59,7 @@ const faixaNumeros = {
   lateral: [2, 6, 14, 25, 26],
   volante: [5, 15, 16, 24],
   meia: [18, 8, 10, 17, 28],
-  atacante: [11, 7, 27],
+  atacante: [11, 7, 27, 29],
   centroavante: [9, 23, 22],
 };
 
