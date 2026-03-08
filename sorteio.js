@@ -38,7 +38,7 @@ const jogadores = [
   { nome: "Delson", posicao: "volante", ranking: 5 },
   { nome: "Bruno Fernandes", posicao: "zagueiro", ranking: 2 },
   { nome: "Guilherme Felix", posicao: "zagueiro", ranking: 3 },
-  { nome: "Fagner", posicao: "zagueiro", ranking: 4 }
+  { nome: "Fagner", posicao: "zagueiro", ranking: 4 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 2 },
   { nome: "Romario", posicao: "zagueiro", ranking: 2 },
   { nome: "Thiago", posicao: "goleiro", ranking: 4 },
@@ -53,7 +53,7 @@ const jogadoresComNumeroFixo = {
 
 const faixaNumeros = {
   goleiro: [1],
-  zagueiro: [3, 4, 13, 12],
+  zagueiro: [3, 4, 13, 12, 26],
   lateral: [2, 6, 14, 25],
   volante: [5, 15, 16, 24],
   meia: [18, 8, 10, 17],
