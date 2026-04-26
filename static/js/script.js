@@ -1,62 +1,36 @@
 async function realizarSorteio() {
-    console.log("Iniciando sorteio...");
     try {
         const response = await fetch('/api/sortear');
-        if (!response.ok) throw new Error('Erro na rede ou rota não encontrada');
-        
         const dados = await response.json();
         
-        // Renderiza os dois times nos seus respectivos campos
-        renderizarTime(dados.verde, 'campo-verde', 'Verde');
-        renderizarTime(dados.branco, 'campo-branco', 'Branco');
-        
-        console.log("Sorteio finalizado com sucesso!");
+        renderizarTime(dados.verde, 'campo-verde');
+        renderizarTime(dados.branco, 'campo-branco');
     } catch (error) {
-        console.error("Erro no sorteio:", error);
-        alert("Erro ao realizar o sorteio! Verifique se o servidor Python está rodando.");
+        console.error("Erro:", error);
     }
 }
 
-function renderizarTime(jogadores, containerId, cor) {
+function renderizarTime(jogadores, containerId) {
     const campo = document.querySelector(`#${containerId} .area-campo`);
-    if (!campo) {
-        console.error(`Erro: Container #${containerId} .area-campo não encontrado!`);
-        return;
-    }
-    
-    campo.innerHTML = ""; // Limpa o campo anterior
+    campo.innerHTML = ""; 
 
-    // Objeto para contar quantos jogadores de cada posição existem no time atual
-    const contadorPosicao = {};
+    const contador = {};
 
     jogadores.forEach((j) => {
-        const p = j.posicao.toLowerCase();
-        
-        // Incrementa o contador para essa posição específica (ex: zagueiro 1, zagueiro 2...)
-        if (!contadorPosicao[p]) contadorPosicao[p] = 1;
-        else contadorPosicao[p]++;
+        const pos = j.posicao.toLowerCase();
+        if (!contador[pos]) contador[pos] = 1;
+        else contador[pos]++;
 
         const div = document.createElement('div');
         
-        // Monta a classe exata que está no seu CSS (ex: pos-zagueiro-1)
-        let classePosicao = `pos-${p}-${contadorPosicao[p]}`;
+        // Se for goleiro usa a classe fixa, se não usa a posição + número (ex: zagueiro-1)
+        let classePos = (pos === 'goleiro') ? 'pos-goleiro' : `pos-${pos}-${contador[pos]}`;
         
-        // Regra especial para o goleiro (que no CSS é apenas pos-goleiro)
-        if (p === 'goleiro') classePosicao = 'pos-goleiro';
-
-        div.className = `jogador-shirt ${classePosicao}`;
-
-        // Define as cores do uniforme baseado no time
-        const bgCor = (cor === 'Verde') ? 'var(--verde-lusa)' : 'var(--branco-lusa)';
-        const textoCor = (cor === 'Verde') ? '#fff' : '#000';
-
+        div.className = `jogador-shirt ${classePos}`;
         div.innerHTML = `
-            <div class="shirt-icon" style="background: ${bgCor}; color: ${textoCor}">
-                ${j.fixo || '?'}
-            </div>
+            <div class="shirt-icon">${j.fixo || '?'}</div>
             <div class="nome-player">${j.nome}</div>
         `;
-        
         campo.appendChild(div);
     });
 }
