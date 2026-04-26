@@ -14,8 +14,8 @@ const jogadores = [
   { nome: "Breno", posicao: "lateral", ranking: 1 },
   { nome: "Gustavo", posicao: "lateral", ranking: 1 },
   { nome: "Davizinho", posicao: "volante", ranking: 1 },
-  { nome: "Thiago Gkay", posicao: "goleiro", ranking: 1 }, // Thiago como Goleiro
-  { nome: "Thiago", posicao: "volante", ranking: 1 }, // Thiago como Volante (nome diferente)
+  { nome: "Thiago Gkay", posicao: "goleiro", ranking: 1 },
+  { nome: "Thiago", posicao: "volante", ranking: 1 },
   { nome: "Mikael", posicao: "lateral", ranking: 1 },
   { nome: "Lucas", posicao: "centroavante", ranking: 1 },
   { nome: "Madruguinha", posicao: "centroavante", ranking: 1 },
@@ -94,7 +94,6 @@ function sortearTimes(listaJogadores, numTimes = 2) {
     const timeFinal = {};
     for (const p in time) {
       let disponiveis = [...(faixaNumeros[p] || [])];
-      // Limpa números já usados como fixos no time
       time[p].forEach(j => {
         if (jogadoresComNumeroFixo[j.nome]) {
           disponiveis = disponiveis.filter(n => n !== jogadoresComNumeroFixo[j.nome]);
@@ -106,7 +105,7 @@ function sortearTimes(listaJogadores, numTimes = 2) {
         return `${n} - ${j.nome}`;
       });
     }
-    resultado[`Time ${i + 1}`] = timeFinal;
+    resultado[`time${i + 1}`] = timeFinal;
   });
   return resultado;
 }
@@ -114,3 +113,4 @@ function sortearTimes(listaJogadores, numTimes = 2) {
 function getListaBase() {
   return jogadores;
 }
+        
