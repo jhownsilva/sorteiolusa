@@ -2,22 +2,20 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lusa Admin</title>
+    <title>Lusa Admin - Gestão</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        .admin-wrap { max-width: 900px; margin: 20px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; }
-        .form-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .admin-container { max-width: 900px; margin: 40px auto; padding: 20px; background: #1a1a1a; border-radius: 15px; }
+        .form-add { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
-        input, select { padding: 8px; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: white; }
-        .btn-add { background: #28a745; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
-        .btn-del { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        th, td { padding: 12px; border-bottom: 1px solid #333; }
+        .btn-excluir { background: none; border: none; cursor: pointer; font-size: 18px; }
     </style>
 </head>
 <body>
-    <div class="admin-wrap">
-        <h2>➕ Novo Jogador</h2>
-        <form class="form-row" action="/api/cadastrar" method="POST">
+    <div class="admin-container">
+        <h2>⚙️ Gestão Lusa F.C.</h2>
+        <form class="form-add" action="/api/cadastrar" method="POST">
             <input type="text" name="nome" placeholder="Nome" required>
             <select name="posicao">
                 <option value="goleiro">Goleiro</option>
@@ -28,13 +26,12 @@
                 <option value="atacante">Atacante</option>
                 <option value="centroavante">Centroavante</option>
             </select>
-            <input type="number" name="fixo" placeholder="Nº Camisa">
-            <button type="submit" class="btn-add">CADASTRAR</button>
+            <input type="number" name="fixo" placeholder="Nº">
+            <button type="submit" class="btn-sortear" style="padding: 10px 20px;">➕ Adicionar</button>
         </form>
 
-        <h2>📋 Elenco Atual</h2>
         <table>
-            <thead><tr><th>Nome</th><th>Posição</th><th>Status</th><th>Ação</th></tr></thead>
+            <thead><tr><th>Jogador</th><th>Posição</th><th>Status</th><th>Excluir</th></tr></thead>
             <tbody>
                 {% for j in jogadores %}
                 <tr>
@@ -43,8 +40,7 @@
                     <td>
                         <form action="/api/alterar_status" method="POST">
                             <input type="hidden" name="nome" value="{{ j.nome }}">
-                            <select name="novo_status" onchange="this.form.submit()" 
-                                    style="color: white; background: {% if j.status == 'dm' %}#e74c3c{% elif j.status == 'suspenso' %}#f1c40f{% else %}#2ecc71{% endif %};">
+                            <select name="novo_status" onchange="this.form.submit()" style="background: #333; color: white;">
                                 <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>Ativo</option>
                                 <option value="dm" {% if j.status == 'dm' %}selected{% endif %}>🚑 D.M</option>
                                 <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>🚫 Suspenso</option>
@@ -52,9 +48,9 @@
                         </form>
                     </td>
                     <td>
-                        <form action="/api/excluir" method="POST" onsubmit="return confirm('Excluir {{ j.nome }}?')">
+                        <form action="/api/excluir" method="POST" onsubmit="return confirm('Apagar {{ j.nome }}?')">
                             <input type="hidden" name="nome" value="{{ j.nome }}">
-                            <button type="submit" class="btn-del">🗑️</button>
+                            <button type="submit" class="btn-excluir">🗑️</button>
                         </form>
                     </td>
                 </tr>
