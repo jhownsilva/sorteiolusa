@@ -11,7 +11,14 @@ async function realizarSorteio() {
             return;
         }
         
-        box.innerHTML = ""; // Limpa a tela
+        // --- ALTERAÇÃO AQUI: Cabeçalho com Logo e Data ---
+        box.innerHTML = `
+            <div style="text-align:center; margin-bottom: 20px; padding: 10px; border-bottom: 2px solid #ddd;">
+                <img src="/static/img/escudo.png" style="width: 80px; height: auto; margin-bottom: 10px;">
+                <div style="font-size: 22px; font-weight: 900; color: #138d43; text-transform: uppercase;">Lusa F.C.</div>
+                <div style="font-size: 14px; font-weight: bold; color: #666;">Data: ${dados.verde.data}</div>
+            </div>
+        `; 
 
         renderLista(dados.verde, box, 'verde');
         renderLista(dados.branco, box, 'branco');
@@ -56,9 +63,14 @@ function renderLista(time, mainBox, cor) {
 
 function baixarImagem() {
     const area = document.getElementById('exportar-area');
-    html2canvas(area, { scale: 2, backgroundColor: "#f0f2f5" }).then(canvas => {
+    // Adicionei scale 3 para a imagem ficar ainda mais nítida no WhatsApp
+    html2canvas(area, { 
+        scale: 3, 
+        backgroundColor: "#f0f2f5",
+        useCORS: true // Ajuda a carregar o logo corretamente se estiver em pasta estática
+    }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'sorteio-lusa.jpg';
+        link.download = `sorteio-lusa-${new Date().toLocaleDateString().replace(/\//g, '-')}.jpg`;
         link.href = canvas.toDataURL("image/jpeg", 0.9);
         link.click();
     });
