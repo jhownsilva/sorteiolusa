@@ -1,39 +1,171 @@
 :root {
     --bg-gray: #f0f2f5;
+    /* Degradê Lusa Original: Verde e Vermelho */
     --degrade-verde: linear-gradient(135deg, #138d43, #e01919);
     --degrade-branco: linear-gradient(135deg, #333, #000);
 }
 
-body { background: var(--bg-gray); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+body { 
+    background: var(--bg-gray); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 20px; 
+}
 
-#exportar-area { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 450px; }
+/* Área que vira o JPG */
+#exportar-area { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    width: 100%; 
+    max-width: 450px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
 
 .team-section { margin-bottom: 35px; }
 
-.team-header { padding: 15px; border-radius: 10px; color: white; font-weight: 900; font-size: 22px; margin-bottom: 15px; text-align: center; }
+/* Cabeçalhos dos Times */
+.team-header { 
+    padding: 15px; 
+    border-radius: 10px; 
+    color: white; 
+    font-weight: 900; 
+    font-size: 22px; 
+    margin-bottom: 15px; 
+    text-align: center; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
 .verde-header { background: var(--degrade-verde); }
 .branco-header { background: var(--degrade-branco); }
 
-.cap-box { background: #fff5f5; border: 1px dashed #ffcccc; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; text-align: left; }
-
-.player-row {
-    display: flex; align-items: center; background: white; border: 1px solid #ddd; 
-    border-radius: 8px; margin-bottom: 6px; height: 45px; overflow: hidden;
+/* Caixa de Capitães no topo do time */
+.cap-box { 
+    background: #fff5f5; 
+    border: 1px dashed #ffcccc; 
+    padding: 12px; 
+    border-radius: 8px; 
+    margin-bottom: 15px; 
+    font-size: 13px; 
+    text-align: left; 
+    line-height: 1.6;
 }
 
+/* Linha do Jogador */
+.player-row {
+    display: flex; 
+    align-items: center; 
+    background: white; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    margin-bottom: 6px; 
+    height: 48px; 
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+/* Círculo/Quadrado do Número */
 .player-num {
-    width: 45px; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white;
+    width: 48px; 
+    height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 900; 
+    color: white;
+    font-size: 16px;
 }
 
 .verde .player-num { background: var(--degrade-verde); }
 .branco .player-num { background: var(--degrade-branco); }
 
-.player-info { padding-left: 15px; font-weight: 700; font-size: 14px; text-transform: uppercase; color: #333; }
+/* Nome do Jogador */
+.player-info { 
+    padding-left: 15px; 
+    font-weight: 700; 
+    font-size: 14px; 
+    text-transform: uppercase; 
+    color: #333; 
+    flex-grow: 1;
+}
 
-.pos-label { font-size: 10px; color: #999; text-transform: uppercase; margin: 10px 0 5px; text-align: left; font-weight: 800; padding-left: 5px; }
+/* Rótulo da Posição (Ex: Goleiros) */
+.pos-label { 
+    font-size: 10px; 
+    color: #999; 
+    text-transform: uppercase; 
+    margin: 12px 0 6px; 
+    text-align: left; 
+    font-weight: 800; 
+    padding-left: 5px; 
+    border-left: 3px solid #ddd;
+}
 
-.is-cap { border: 2px solid #ffbc00 !important; background: #fffdf0; }
+/* Destaque visual para quem é Capitão na lista */
+.is-cap { 
+    border: 2px solid #ffbc00 !important; 
+    background: #fffdf0; 
+}
 
-.header { margin-bottom: 20px; }
-.btn-sortear { background: #138d43; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; margin: 5px; }
-.btn-baixar { background: #333; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; margin: 5px; }
+/* Quadro de Desfalques (O que você pediu) */
+.desfalques-box {
+    margin-top: 25px;
+    padding: 15px;
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.desfalques-title {
+    font-size: 11px;
+    font-weight: 900;
+    color: #cc0000;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ffdada;
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.desfalque-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Botões Superiores */
+.header { margin-bottom: 25px; }
+
+.btn-sortear { 
+    background: #138d43; 
+    color: white; 
+    border: none; 
+    padding: 12px 28px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 5px;
+    box-shadow: 0 4px 15px rgba(19, 141, 67, 0.3);
+}
+
+.btn-baixar { 
+    background: #333; 
+    color: white; 
+    border: none; 
+    padding: 12px 28px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-sortear:active, .btn-baixar:active {
+    transform: scale(0.95);
+}
