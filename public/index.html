@@ -56,18 +56,26 @@
   }
 
   function sortear() {
-    // 1. Pegamos a lista direto do sorteio.js que carregou na memória
-    const base = getListaBase(); 
-    const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
-    
-    // 2. Realizamos o sorteio
-    const resultado = sortearTimes(listaFinal);
-    
-    // 3. Desenhamos na tela
+    // CORREÇÃO CRÍTICA: Pegar a lista da função local, não do fetch
+    try {
+      const base = getListaBase(); 
+      const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
+      
+      const resultado = sortearTimes(listaFinal);
+      
+      // Chamar a função que desenha os cards na tela
+      exibirResultado(resultado);
+    } catch (e) {
+      console.error("Erro ao sortear:", e);
+      alert("Erro ao carregar os jogadores. Verifique o console.");
+    }
+  }
+
+  function exibirResultado(dados) {
     const container = document.getElementById("resultado");
     container.innerHTML = "";
 
-    Object.entries(resultado).forEach(([timeKey, setores], i) => {
+    Object.entries(dados).forEach(([timeKey, setores], i) => {
       const teamDiv = document.createElement("div");
       const teamName = i === 0 ? "TIME VERDE" : "TIME BRANCO";
       teamDiv.className = i === 0 ? "team team1" : "team team2";
@@ -75,6 +83,7 @@
 
       const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
       const capitaes = escolherCapitaes(todosJogadores, 2);
+      
       const capDiv = document.createElement("div");
       capDiv.className = "capitaes";
       capDiv.innerHTML = `<h3>🧢 Capitães:</h3><ul>${capitaes.map(c => `<li>${c}</li>`).join('')}</ul>`;
@@ -85,15 +94,15 @@
           const zonaDiv = document.createElement("div");
           zonaDiv.className = "zona";
           zonaDiv.innerHTML = `<h3>${pos.toUpperCase()}S</h3><div class="cards"></div>`;
-          const cardsContainer = zonaDiv.querySelector(".cards");
+          const cardsCtx = zonaDiv.querySelector(".cards");
 
-          setores[pos].forEach(jogadorStr => {
-            const [numero, ...resto] = jogadorStr.split(" - ");
+          setores[pos].forEach(jStr => {
+            const [numero, ...resto] = jStr.split(" - ");
             const nome = resto.join(" - ");
             const card = document.createElement("div");
             card.className = "card";
             card.innerHTML = `<div class="numero">${numero}</div><div class="nome">${nome}</div>`;
-            cardsContainer.appendChild(card);
+            cardsCtx.appendChild(card);
           });
           teamDiv.appendChild(zonaDiv);
         }
@@ -101,25 +110,3 @@
       container.appendChild(teamDiv);
     });
   }
-
-  function escolherCapitaes(lista, quantia) {
-    const copia = [...lista];
-    const sorteados = [];
-    while (sorteados.length < quantia && copia.length > 0) {
-      const idx = Math.floor(Math.random() * copia.length);
-      sorteados.push(copia.splice(idx, 1)[0]);
-    }
-    return sorteados;
-  }
-
-  function baixarImagem() {
-    html2canvas(document.getElementById('resultado')).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "sorteio.jpg";
-      link.href = canvas.toDataURL("image/jpeg");
-      link.click();
-    });
-  }
-</script>
-</body>
-</html>
