@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import random
-import json
-import os
+import random, json, os, datetime
 
 app = Flask(__name__)
 app.secret_key = "lusa_2026_key"
 
 DATA_FILE = 'jogadores.json'
-ULTIMOS_CAPITAES = [] # Memória temporária para não repetir capitães
+ULTIMOS_CAPITAES = []
 
+FIXOS = {'Guilherme Felix': 19, 'Jackson': 21, 'Madruguinha': 20}
 FAIXAS = {
     "goleiro": [1],
     "zagueiro": [3, 4, 13, 12, 26],
@@ -26,71 +25,58 @@ def carregar_jogadores():
 @app.route('/api/sortear')
 def sortear():
     global ULTIMOS_CAPITAES
-    jogadores = [j for j in carregar_jogadores() if j['status'] == 'ativo']
+    ativos = [j for j in carregar_jogadores() if j['status'] == 'ativo']
     
-    # Separar por time de forma equilibrada
-    random.shuffle(jogadores)
-    meio = len(jogadores) // 2
-    times = {"verde": jogadores[:meio], "branco": jogadores[meio:]}
-    
+    # Organiza por posição para dividir IGUALMENTE
+    categorias = {}
+    for j in ativos:
+        pos = j['posicao']
+        if pos not in categorias: categorias[pos] = []
+        categorias[pos].append(j)
+
+    verde, branco = [], []
+    for pos, lista in categorias.items():
+        random.shuffle(lista)
+        for i, jog in enumerate(lista):
+            if i % 2 == 0: verde.append(jog)
+            else: branco.append(jog)
+
     resultado = {}
-    
-    for cor, elenco in times.items():
+    data_hoje = datetime.datetime.now().strftime("%d/%m/%Y")
+
+    for cor, elenco in [("verde", verde), ("branco", branco)]:
         random.shuffle(elenco)
-        # Escolher Capitães (Principal e Suplente) que não repetiram
+        # Sorteio de Capitães sem repetir
         candidatos = [j['nome'] for j in elenco if j['nome'] not in ULTIMOS_CAPITAES]
-        if len(candidatos) < 2: candidatos = [j['nome'] for j in elenco] # Reset se faltar gente
-        
+        if len(candidatos) < 2: candidatos = [j['nome'] for j in elenco]
         sorteados = random.sample(candidatos, 2)
-        cap_principal = sorteados[0]
-        cap_suplente = sorteados[1]
         
-        # Atribuir números
         numeros_usados = []
         elenco_final = []
         
+        # Atribuição de números rigorosa
         for j in elenco:
-            num = j.get('fixo')
+            num = FIXOS.get(j['nome'])
             if not num:
-                opcoes = [n for n in FAIXAS.get(j['posicao'], [99]) if n not in numeros_usados]
-                num = random.choice(opcoes) if opcoes else 99
+                opcoes = [n for n in FAIXAS.get(j['posicao'], [0]) if n not in numeros_usados]
+                num = random.choice(opcoes) if opcoes else 0
             
             numeros_usados.append(num)
             elenco_final.append({
-                "nome": j['nome'],
-                "posicao": j['posicao'],
-                "numero": num,
-                "is_capitao": j['nome'] == cap_principal,
-                "is_suplente": j['nome'] == cap_suplente
+                "nome": j['nome'], "posicao": j['posicao'], "numero": num,
+                "is_cap": j['nome'] == sorteados[0], "is_sup": j['nome'] == sorteados[1]
             })
-        
+
         resultado[cor] = {
-            "jogadores": elenco_final,
-            "cap_principal": cap_principal,
-            "cap_suplente": cap_suplente
+            "jogadores": elenco_final, "data": data_hoje,
+            "cap": sorteados[0], "sup": sorteados[1]
         }
     
-    # Atualizar memória de capitães
-    ULTIMOS_CAPITAES = [resultado['verde']['cap_principal'], resultado['branco']['cap_principal']]
-    
+    ULTIMOS_CAPITAES = [resultado['verde']['cap'], resultado['branco']['cap']]
     return jsonify(resultado)
 
-# Mantenha as outras rotas (index, admin, login) iguais
 @app.route('/')
 def index(): return render_template('index.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        if request.form['user'] == 'admin' and request.form['pass'] == 'admin':
-            session['admin'] = True
-            return redirect(url_for('admin'))
-    return render_template('login.html')
-
-@app.route('/admin')
-def admin():
-    if not session.get('admin'): return redirect(url_for('login'))
-    return render_template('admin.html', jogadores=carregar_jogadores())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
