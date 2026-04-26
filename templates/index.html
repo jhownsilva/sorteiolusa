@@ -2,11 +2,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lusa F.C. - Sorteio de Times</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
+
     <div class="header">
         <a href="/login" class="btn-admin" style="color: #666; text-decoration: none; font-size: 12px; margin-right: 20px;">⚙️ Admin</a>
         <button class="btn-sortear" onclick="realizarSorteio()">🎲 GERAR ESCALAÇÃO</button>
@@ -14,12 +17,11 @@
     </div>
 
     <div id="exportar-area">
-        <div class="dashboard">
-            <div id="campo-verde"></div>
-            <div id="campo-branco"></div>
-        </div>
+        <div id="conteudo-sorteio">
+            </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>
