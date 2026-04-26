@@ -1,47 +1,90 @@
-.campo-container {
-    background: #2e7d32;
-    background-image: linear-gradient(rgba(255,255,255,0.1) 2px, transparent 2px), 
-                      linear-gradient(90deg, rgba(255,255,255,0.1) 2px, transparent 2px);
-    background-size: 50px 50px;
-    border: 5px solid #fff;
-    height: 750px;
-    position: relative;
-    border-radius: 20px;
+:root {
+    --verde-lusa: linear-gradient(180deg, #138d43 0%, #0a5a2a 100%);
+    --vermelho-lusa: #e01919;
+    --azul-card: #003399;
+    --amarelo-num: #ffcc00;
 }
 
-/* O CARD DO JOGADOR IGUAL AO INFOGRÁFICO */
+body {
+    background-color: #0f0f0f;
+    color: white;
+    font-family: 'Arial Black', sans-serif;
+    margin: 0;
+    text-align: center;
+}
+
+/* Campo estilo Infográfico */
+.campo-container {
+    background: #2e7d32;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 100% 10%, 10% 100%;
+    border: 5px solid white;
+    border-radius: 15px;
+    height: 700px;
+    position: relative;
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+/* Estilo do Card do Jogador */
 .jogador-shirt {
     position: absolute;
+    width: 110px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100px;
+    transition: all 0.3s ease;
 }
 
+/* Círculo do Número */
 .shirt-icon {
-    width: 50px;
-    height: 50px;
-    background: #ffcc00; /* Amarelo */
+    width: 55px;
+    height: 55px;
+    background: var(--amarelo-num);
     color: #000;
     border-radius: 50%;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 4px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    z-index: 2;
 }
 
+/* Faixa do Nome (Azul igual ao exemplo) */
 .nome-player {
-    background: linear-gradient(to right, #0044cc, #0022aa); /* Azul Lusa */
+    background: var(--azul-card);
     color: white;
     padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-top: -5px; /* Sobrepõe levemente o círculo */
-    text-transform: uppercase;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: -10px; /* Sobrepõe o círculo */
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.2);
+    z-index: 1;
+    text-transform: uppercase;
 }
+
+/* Botões Modernos */
+.btn-sortear {
+    background: var(--verde-lusa);
+    color: white;
+    border: 2px solid white;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 20px;
+    box-shadow: 0 5px 20px rgba(19, 141, 67, 0.4);
+}
+
+.btn-sortear:hover { transform: scale(1.05); background: #1bb355; }
