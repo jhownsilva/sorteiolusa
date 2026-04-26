@@ -2,22 +2,73 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lusa Admin - Gestão</title>
+    <title>Lusa Admin - Gestão de Elenco</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        .admin-container { max-width: 900px; margin: 40px auto; padding: 20px; background: #1a1a1a; border-radius: 15px; }
-        .form-add { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; border-bottom: 1px solid #333; }
-        .btn-excluir { background: none; border: none; cursor: pointer; font-size: 18px; }
+        /* Estilos específicos para o Painel Admin */
+        .admin-container { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 30px; 
+            background: #ffffff; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            color: #333;
+        }
+        .form-add { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 30px; 
+            padding: 20px; 
+            background: #f8f9fa; 
+            border-radius: 10px; 
+            flex-wrap: wrap;
+        }
+        input, select { 
+            padding: 10px; 
+            border-radius: 5px; 
+            border: 1px solid #ddd; 
+            font-size: 14px;
+        }
+        .btn-save { 
+            background: #138d43; 
+            color: white; 
+            border: none; 
+            padding: 10px 25px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f4f4f4; text-transform: uppercase; font-size: 12px; color: #666; }
+        
+        .status-select {
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+            border: none;
+        }
+        .btn-excluir {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+
     <div class="admin-container">
-        <h2>⚙️ Gestão Lusa F.C.</h2>
+        <h2 style="color: #138d43;">⚙️ Painel de Controle Lusa F.C.</h2>
+        <p style="font-size: 14px; color: #666;">Cadastre jogadores ou mude o status (DM/Suspenso) para o sorteio ignorá-los.</p>
+        
         <form class="form-add" action="/api/cadastrar" method="POST">
-            <input type="text" name="nome" placeholder="Nome" required>
-            <select name="posicao">
+            <input type="text" name="nome" placeholder="Nome do Jogador" required style="flex: 2;">
+            <select name="posicao" required>
                 <option value="goleiro">Goleiro</option>
                 <option value="zagueiro">Zagueiro</option>
                 <option value="lateral">Lateral</option>
@@ -26,29 +77,37 @@
                 <option value="atacante">Atacante</option>
                 <option value="centroavante">Centroavante</option>
             </select>
-            <input type="number" name="fixo" placeholder="Nº">
-            <button type="submit" class="btn-sortear" style="padding: 10px 20px;">➕ Adicionar</button>
+            <input type="number" name="fixo" placeholder="Nº Camisa" style="width: 80px;">
+            <button type="submit" class="btn-save">➕ ADICIONAR</button>
         </form>
 
         <table>
-            <thead><tr><th>Jogador</th><th>Posição</th><th>Status</th><th>Excluir</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>Jogador</th>
+                    <th>Posição</th>
+                    <th>Status / D.M</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
             <tbody>
                 {% for j in jogadores %}
                 <tr>
-                    <td>{{ j.nome }}</td>
-                    <td>{{ j.posicao.upper() }}</td>
+                    <td style="font-weight: bold;">{{ j.nome }}</td>
+                    <td><span style="font-size: 11px; background: #eee; padding: 3px 8px; border-radius: 10px;">{{ j.posicao.upper() }}</span></td>
                     <td>
                         <form action="/api/alterar_status" method="POST">
                             <input type="hidden" name="nome" value="{{ j.nome }}">
-                            <select name="novo_status" onchange="this.form.submit()" style="background: #333; color: white;">
-                                <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>Ativo</option>
+                            <select name="novo_status" onchange="this.form.submit()" class="status-select" 
+                                style="background-color: {% if j.status == 'dm' %}#e74c3c{% elif j.status == 'suspenso' %}#f1c40f{% else %}#2ecc71{% endif %};">
+                                <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>ATIVO</option>
                                 <option value="dm" {% if j.status == 'dm' %}selected{% endif %}>🚑 D.M</option>
-                                <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>🚫 Suspenso</option>
+                                <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>🚫 SUSPENSO</option>
                             </select>
                         </form>
                     </td>
                     <td>
-                        <form action="/api/excluir" method="POST" onsubmit="return confirm('Apagar {{ j.nome }}?')">
+                        <form action="/api/excluir" method="POST" onsubmit="return confirm('Apagar {{ j.nome }} definitivamente?')">
                             <input type="hidden" name="nome" value="{{ j.nome }}">
                             <button type="submit" class="btn-excluir">🗑️</button>
                         </form>
@@ -57,7 +116,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        <br><a href="/" style="color: #007bff;">⬅️ Voltar ao Sorteio</a>
+        
+        <br>
+        <a href="/" style="display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none; font-weight: bold;">⬅️ Voltar para a Escalação</a>
     </div>
+
 </body>
 </html>
