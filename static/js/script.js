@@ -1,40 +1,46 @@
 async function realizarSorteio() {
-    const response = await fetch('/api/sortear');
-    const dados = await response.json();
+    const res = await fetch('/api/sortear');
+    const dados = await res.json();
+    const area = document.getElementById('exportar-area');
     
-    renderizarTime(dados.verde, 'campo-verde', 'verde');
-    renderizarTime(dados.branco, 'campo-branco', 'branco');
+    area.innerHTML = `
+        <img src="/static/img/escudo.png" class="escudo-lusa">
+        <div class="data-sorteio">SORTEIO: ${dados.verde.data}</div>
+        <div id="verde-lista"></div>
+        <div id="branco-lista"></div>
+    `;
+
+    renderLista(dados.verde, 'verde-lista', 'verde');
+    renderLista(dados.branco, 'branco-lista', 'branco');
     document.getElementById('btnDownload').style.display = 'block';
 }
 
-function renderizarTime(timeData, containerId, cor) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = `
-        <h2 style="text-align:center; color:${cor=='verde'?'#138d43':'#333'}">TIME ${cor.toUpperCase()}</h2>
-        <div class="capitaes-box">
-            <div><span class="cap-tag">🌟 CAPITÃO:</span> ${timeData.cap_principal}</div>
-            <div><span class="cap-tag">🎖️ SUPLENTE:</span> ${timeData.cap_suplente}</div>
+function renderLista(time, id, cor) {
+    const div = document.getElementById(id);
+    div.className = `team-section ${cor}`;
+    div.innerHTML = `
+        <div class="team-header ${cor}-header">TIME ${cor.toUpperCase()}</div>
+        <div class="cap-box">
+            <b>🌟 CAPITÃO:</b> ${time.cap} <br>
+            <b>🎖️ SUPLENTE:</b> ${time.sup}
         </div>
     `;
-    container.className = `team-column ${cor}`;
 
-    const zonas = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
-    
-    zonas.forEach(pos => {
-        const filtrados = timeData.jogadores.filter(j => j.posicao === pos);
-        if (filtrados.length > 0) {
-            container.innerHTML += `<div class="zona-title">${pos}s</div>`;
-            filtrados.forEach(j => {
-                const capClass = j.is_capitao ? 'is-capitao' : '';
-                const capIcon = j.is_capitao ? ' (C)' : (j.is_suplente ? ' (S)' : '');
-                
-                container.innerHTML += `
-                    <div class="player-card ${capClass}">
-                        <div class="player-number">${j.numero}</div>
-                        <div class="player-name">${j.nome}${capIcon}</div>
+    const ordens = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
+    ordens.forEach(pos => {
+        const jogs = time.jogadores.filter(j => j.posicao === pos);
+        if (jogs.length > 0) {
+            div.innerHTML += `<div class="pos-label">${pos}s</div>`;
+            jogs.forEach(j => {
+                const capMark = j.is_cap ? ' (C)' : (j.is_sup ? ' (S)' : '');
+                div.innerHTML += `
+                    <div class="player-row ${j.is_cap ? 'is-cap' : ''}">
+                        <div class="player-num">${j.numero}</div>
+                        <div class="player-info">${j.nome}${capMark}</div>
                     </div>
                 `;
             });
         }
     });
 }
+
