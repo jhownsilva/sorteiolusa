@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sorteio de Times - Com Capitães</title>
+  <title>Sorteio de Times - Lusa</title>
   <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; margin: 0; padding: 20px; color: #333; }
     h1 { text-align: center; font-size: 28px; margin-bottom: 20px; }
@@ -25,7 +25,6 @@
     .capitaes h3 { font-size: 18px; margin-bottom: 6px; color: #007bff; }
     .capitaes ul { margin: 0; padding-left: 20px; }
     .capitaes li { font-size: 17px; font-weight: bold; margin-bottom: 4px; }
-    @media screen and (max-width: 600px) { .card { width: 80px; font-size: 12px; } }
   </style>
 </head>
 <body>
@@ -35,7 +34,7 @@
 <div class="controls">
   <button onclick="sortear()">🎲 Sortear Times</button>
   <button onclick="toggleJogadoresExtras()">Usar jogadores adicionais</button>
-  <button class="kickoff" onclick="alert('Boa partida!')">KICK-OFF</button>
+  <button class="kickoff" onclick="alert('Bom jogo!')">KICK-OFF</button>
   <button onclick="baixarImagem()">📸 Salvar como Imagem (.JPG)</button>
 </div>
 
@@ -56,22 +55,18 @@
   }
 
   function sortear() {
-    // CORREÇÃO CRÍTICA: Pegar a lista da função local, não do fetch
-    try {
-      const base = getListaBase(); 
-      const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
-      
-      const resultado = sortearTimes(listaFinal);
-      
-      // Chamar a função que desenha os cards na tela
-      exibirResultado(resultado);
-    } catch (e) {
-      console.error("Erro ao sortear:", e);
-      alert("Erro ao carregar os jogadores. Verifique o console.");
-    }
+    // Pegando a lista base diretamente do sorteio.js carregado
+    const base = getListaBase();
+    const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
+    
+    // Sorteando
+    const dadosSorteados = sortearTimes(listaFinal);
+    
+    // Renderizando na tela
+    renderizar(dadosSorteados);
   }
 
-  function exibirResultado(dados) {
+  function renderizar(dados) {
     const container = document.getElementById("resultado");
     container.innerHTML = "";
 
@@ -110,3 +105,25 @@
       container.appendChild(teamDiv);
     });
   }
+
+  function escolherCapitaes(lista, quantia) {
+    const copia = [...lista];
+    const sorteados = [];
+    while (sorteados.length < quantia && copia.length > 0) {
+      const idx = Math.floor(Math.random() * copia.length);
+      sorteados.push(copia.splice(idx, 1)[0]);
+    }
+    return sorteados;
+  }
+
+  function baixarImagem() {
+    html2canvas(document.getElementById('resultado')).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "sorteio-lusa.jpg";
+      link.href = canvas.toDataURL("image/jpeg");
+      link.click();
+    });
+  }
+</script>
+</body>
+</html>
