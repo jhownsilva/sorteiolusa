@@ -5,27 +5,143 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sorteio de Times - Com Capitães</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; margin: 0; padding: 20px; color: #333; }
-    h1 { text-align: center; font-size: 28px; margin-bottom: 20px; }
-    .controls { text-align: center; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-    .kickoff { background: #ff9900; }
-    .teams-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-    .team { width: 100%; max-width: 600px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .team h2 { text-align: center; margin-top: 0; font-size: 24px; color: #111; }
-    .zona { margin-top: 20px; }
-    .zona h3 { font-size: 18px; font-weight: bold; color: #222; margin-bottom: 10px; border-bottom: 2px solid #ccc; padding-bottom: 4px; text-transform: uppercase; }
-    .cards { display: flex; flex-wrap: wrap; gap: 12px; }
-    .card { background: #eee; border-radius: 10px; padding: 10px; width: 100px; text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.15); }
-    .team1 .card { background: linear-gradient(135deg, #138d43, #e01919); color: white; }
-    .team2 .card { background: linear-gradient(135deg, #ffffff, #333333); color: black; }
-    .numero { font-size: 28px; font-weight: bold; margin-bottom: 5px; }
-    .nome { font-size: 16px; font-weight: 600; }
-    .capitaes { margin-bottom: 20px; }
-    .capitaes h3 { font-size: 18px; margin-bottom: 6px; color: #007bff; }
-    .capitaes ul { margin: 0; padding-left: 20px; }
-    .capitaes li { font-size: 17px; font-weight: bold; margin-bottom: 4px; }
-    @media screen and (max-width: 600px) { .card { width: 80px; font-size: 12px; } }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .kickoff {
+      background: #ff9900;
+    }
+
+    .teams-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .team {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .team h2 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 24px;
+      color: #111;
+    }
+
+    .zona {
+      margin-top: 20px;
+    }
+
+    .zona h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card {
+      background: #eee;
+      border-radius: 10px;
+      padding: 10px;
+      width: 100px;
+      text-align: center;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    }
+
+    .team1 .card {
+      background: linear-gradient(135deg, #138d43, #e01919);
+      color: white;
+    }
+
+    .team2 .card {
+      background: linear-gradient(135deg, #ffffff, #333333);
+      color: black;
+    }
+
+    .numero {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .nome {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .capitaes {
+      margin-bottom: 20px;
+    }
+
+    .capitaes h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #007bff;
+    }
+
+    .capitaes ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .capitaes li {
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .card {
+        width: 80px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -48,7 +164,15 @@
   let jogadoresExtras = JSON.parse(localStorage.getItem("jogadores")) || [];
   let usarExtras = false;
 
-  const ordemZonas = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
+  const ordemZonas = [
+    "goleiro",
+    "zagueiro",
+    "lateral",
+    "volante",
+    "meia",
+    "atacante",
+    "centroavante"
+  ];
 
   function toggleJogadoresExtras() {
     usarExtras = !usarExtras;
@@ -56,14 +180,20 @@
     btn.textContent = usarExtras ? "Desativar jogadores extras" : "Usar jogadores adicionais";
   }
 
+  // Função principal corrigida para o Render
   function sortear() {
-    const base = getListaBase();
-    const listaCompleta = usarExtras ? [...base, ...jogadoresExtras] : base;
-    const dadosSorteados = sortearTimes(listaCompleta);
-    exibirNaTela(dadosSorteados);
+    // Pegamos a base direto do sorteio.js carregado na memória
+    const base = getListaBase(); 
+    const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
+    
+    // Realizamos o sorteio
+    const resultado = sortearTimes(listaFinal);
+    
+    // Desenhamos na tela
+    renderizarSorteio(resultado);
   }
 
-  function exibirNaTela(dados) {
+  function renderizarSorteio(dados) {
     const container = document.getElementById("resultado");
     container.innerHTML = "";
 
@@ -73,20 +203,21 @@
       teamDiv.className = i === 0 ? "team team1" : "team team2";
       teamDiv.innerHTML = `<h2>${teamName}</h2>`;
 
-      // Lógica de Capitães
+      // Selecionar capitães
       const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
       const capitaes = escolherCapitaes(todosJogadores, 2);
+
       const capDiv = document.createElement("div");
       capDiv.className = "capitaes";
       capDiv.innerHTML = `<h3>🧢 Capitães:</h3><ul>${capitaes.map(c => `<li>${c}</li>`).join('')}</ul>`;
       teamDiv.appendChild(capDiv);
 
-      // Lógica das Zonas (Mantendo seu layout de cards)
       ordemZonas.forEach(pos => {
         if (setores[pos] && setores[pos].length > 0) {
           const zonaDiv = document.createElement("div");
           zonaDiv.className = "zona";
           zonaDiv.innerHTML = `<h3>${pos.toUpperCase()}S</h3><div class="cards"></div>`;
+
           const cardsContainer = zonaDiv.querySelector(".cards");
 
           setores[pos].forEach(jogadorStr => {
@@ -94,12 +225,17 @@
             const nome = resto.join(" - ");
             const card = document.createElement("div");
             card.className = "card";
-            card.innerHTML = `<div class="numero">${numero}</div><div class="nome">${nome}</div>`;
+            card.innerHTML = `
+              <div class="numero">${numero}</div>
+              <div class="nome">${nome}</div>
+            `;
             cardsContainer.appendChild(card);
           });
+
           teamDiv.appendChild(zonaDiv);
         }
       });
+
       container.appendChild(teamDiv);
     });
   }
@@ -115,13 +251,15 @@
   }
 
   function baixarImagem() {
-    html2canvas(document.getElementById('resultado')).then(canvas => {
+    const alvo = document.getElementById('resultado');
+    html2canvas(alvo).then(canvas => {
       const link = document.createElement("a");
-      link.download = "sorteio.jpg";
-      link.href = canvas.toDataURL("image/jpeg");
+      link.download = "sorteio-times.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 1.0);
       link.click();
     });
   }
 </script>
+
 </body>
 </html>
