@@ -1,4 +1,5 @@
-const jogadores = [
+// Dados fixos do Sorteio
+const jogadoresBase = [
   { nome: "Felipe", posicao: "goleiro", ranking: 1 },
   { nome: "Thiago Gkay", posicao: "goleiro", ranking: 1 },
   { nome: "Bruno Fernandes", posicao: "zagueiro", ranking: 1 },
@@ -64,12 +65,20 @@ const faixaNumeros = {
   centroavante: [9, 23, 22],
 };
 
+// Funções Auxiliares
 function embaralhar(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+function getListaBase() {
+  return jogadoresBase;
+}
+
+// Lógica de Sorteio
 function sortearTimes(listaJogadores) {
   const porPosicao = {};
+  
+  // Organiza por posição
   listaJogadores.forEach(j => {
     const p = j.posicao.toLowerCase();
     if (!porPosicao[p]) porPosicao[p] = [];
@@ -78,6 +87,7 @@ function sortearTimes(listaJogadores) {
 
   const times = [{}, {}];
 
+  // Distribui equilibradamente entre time 0 e time 1
   for (const pos in porPosicao) {
     const lista = embaralhar([...porPosicao[pos]]);
     lista.forEach((jogador, index) => {
@@ -90,15 +100,19 @@ function sortearTimes(listaJogadores) {
   const resultado = {};
   let numExtra = 30;
 
+  // Atribui numeração e formata para a renderização
   times.forEach((time, i) => {
     const timeFinal = {};
     for (const p in time) {
       let disponiveis = [...(faixaNumeros[p] || [])];
+      
+      // Remove números que já são fixos de outros jogadores no mesmo time
       time[p].forEach(j => {
         if (jogadoresComNumeroFixo[j.nome]) {
           disponiveis = disponiveis.filter(n => n !== jogadoresComNumeroFixo[j.nome]);
         }
       });
+
       timeFinal[p] = time[p].map(j => {
         let n = jogadoresComNumeroFixo[j.nome] || disponiveis.shift() || numExtra++;
         return `${n} - ${j.nome}`;
@@ -106,9 +120,6 @@ function sortearTimes(listaJogadores) {
     }
     resultado[`time${i + 1}`] = timeFinal;
   });
+  
   return resultado;
-}
-
-function getListaBase() {
-  return jogadores;
 }
