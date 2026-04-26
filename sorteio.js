@@ -1,17 +1,12 @@
 const jogadores = [
-  // GOLEIROS
   { nome: "Felipe", posicao: "goleiro", ranking: 1 },
-  { nome: "Thiago", posicao: "goleiro", ranking: 1 },
-
-  // ZAGUEIROS
+  { nome: "Thiago Gkay", posicao: "goleiro", ranking: 1 },
   { nome: "Bruno Fernandes", posicao: "zagueiro", ranking: 1 },
   { nome: "Dé", posicao: "zagueiro", ranking: 1 },
   { nome: "Fagner", posicao: "zagueiro", ranking: 1 },
   { nome: "Guilherme Felix", posicao: "zagueiro", ranking: 1 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 1 },
   { nome: "Romario", posicao: "zagueiro", ranking: 1 },
-
-  // LATERAIS
   { nome: "André", posicao: "lateral", ranking: 1 },
   { nome: "Breno", posicao: "lateral", ranking: 1 },
   { nome: "Giovanni Rocha", posicao: "lateral", ranking: 1 },
@@ -20,8 +15,6 @@ const jogadores = [
   { nome: "Jhimmy", posicao: "lateral", ranking: 1 },
   { nome: "Madson", posicao: "lateral", ranking: 1 },
   { nome: "Mikael", posicao: "lateral", ranking: 1 },
-
-  // VOLANTES
   { nome: "Armeiro", posicao: "volante", ranking: 1 },
   { nome: "Davizinho", posicao: "volante", ranking: 1 },
   { nome: "Delson", posicao: "volante", ranking: 1 },
@@ -29,11 +22,9 @@ const jogadores = [
   { nome: "Kaique", posicao: "volante", ranking: 1 },
   { nome: "Nathan Eneas", posicao: "volante", ranking: 1 },
   { nome: "Rafinha", posicao: "volante", ranking: 1 },
-  { nome: "Thiago V", posicao: "volante", ranking: 1 },
+  { nome: "Thiago", posicao: "volante", ranking: 1 },
   { nome: "Wesley", posicao: "volante", ranking: 1 },
   { nome: "Willian", posicao: "volante", ranking: 1 },
-
-  // MEIAS
   { nome: "Cae", posicao: "meia", ranking: 1 },
   { nome: "Erick Samurai", posicao: "meia", ranking: 1 },
   { nome: "Gah", posicao: "meia", ranking: 1 },
@@ -42,8 +33,6 @@ const jogadores = [
   { nome: "Renan", posicao: "meia", ranking: 1 },
   { nome: "Sakai", posicao: "meia", ranking: 1 },
   { nome: "Ventura", posicao: "meia", ranking: 1 },
-
-  // ATACANTES
   { nome: "Anézio", posicao: "atacante", ranking: 1 },
   { nome: "Caio", posicao: "atacante", ranking: 1 },
   { nome: "Carlão", posicao: "atacante", ranking: 1 },
@@ -51,8 +40,6 @@ const jogadores = [
   { nome: "Guilherme", posicao: "atacante", ranking: 1 },
   { nome: "Gustavinho", posicao: "atacante", ranking: 1 },
   { nome: "Luis Henrique", posicao: "atacante", ranking: 1 },
-
-  // CENTROAVANTES
   { nome: "Bruno Zanin", posicao: "centroavante", ranking: 1 },
   { nome: "Diego", posicao: "centroavante", ranking: 1 },
   { nome: "Edberto", posicao: "centroavante", ranking: 1 },
@@ -81,7 +68,7 @@ function embaralhar(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-function sortearTimes(listaJogadores, numTimes = 2) {
+function sortearTimes(listaJogadores) {
   const porPosicao = {};
   listaJogadores.forEach(j => {
     const p = j.posicao.toLowerCase();
@@ -89,12 +76,12 @@ function sortearTimes(listaJogadores, numTimes = 2) {
     porPosicao[p].push(j);
   });
 
-  const times = Array.from({ length: numTimes }, () => ({}));
+  const times = [{}, {}];
 
   for (const pos in porPosicao) {
     const lista = embaralhar([...porPosicao[pos]]);
     lista.forEach((jogador, index) => {
-      const timeAlvo = index % numTimes;
+      const timeAlvo = index % 2;
       if (!times[timeAlvo][pos]) times[timeAlvo][pos] = [];
       times[timeAlvo][pos].push(jogador);
     });
@@ -112,7 +99,6 @@ function sortearTimes(listaJogadores, numTimes = 2) {
           disponiveis = disponiveis.filter(n => n !== jogadoresComNumeroFixo[j.nome]);
         }
       });
-
       timeFinal[p] = time[p].map(j => {
         let n = jogadoresComNumeroFixo[j.nome] || disponiveis.shift() || numExtra++;
         return `${n} - ${j.nome}`;
