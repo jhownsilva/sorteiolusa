@@ -8,14 +8,30 @@ async function realizarSorteio() {
 
 function renderizarTime(jogadores, containerId, cor) {
     const campo = document.querySelector(`#${containerId} .area-campo`);
-    campo.innerHTML = ""; // Limpa o campo
+    campo.innerHTML = ""; 
 
-    jogadores.forEach((j, index) => {
+    // Objeto para contar quantos jogadores de cada posição já foram colocados
+    // para evitar que dois zagueiros fiquem no mesmo lugar
+    const contadorPosicao = {};
+
+    jogadores.forEach((j) => {
+        const posKey = j.posicao.toLowerCase();
+        if (!contadorPosicao[posKey]) contadorPosicao[posKey] = 1;
+        else contadorPosicao[posKey]++;
+
         const div = document.createElement('div');
-        div.className = `jogador-shirt pos-layout-${index}`; // Classes de posição do CSS
+        
+        // Atribui a classe de posição (ex: pos-zagueiro-1, pos-zagueiro-2)
+        const classePosicao = `pos-${posKey}-${contadorPosicao[posKey]}`;
+        
+        // Caso especial para Goleiro que geralmente é só um
+        const classeFinal = posKey === 'goleiro' ? 'pos-goleiro' : classePosicao;
+
+        div.className = `jogador-shirt ${classeFinal}`;
+        
         div.innerHTML = `
             <div class="shirt-icon" style="background: ${cor === 'Verde' ? '#138d43' : '#fff'}; color: ${cor === 'Verde' ? '#fff' : '#000'}">
-                ${j.fixo || index + 1}
+                ${j.fixo || '?'}
             </div>
             <div class="nome-player">${j.nome}</div>
         `;
