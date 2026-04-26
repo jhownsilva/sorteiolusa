@@ -10,11 +10,16 @@ app.secret_key = "lusa_2026_key"
 DATA_FILE = 'jogadores.json'
 ULTIMOS_CAPITAES = []
 
+# --- CONFIGURAÇÃO DE UNIFORMES ---
 NUMEROS_FIXOS = {
     'Guilherme Felix': 19,
     'Jackson': 21,
     'Madruguinha': 20
 }
+
+# Definição de prioridade conforme os uniformes disponíveis
+NUMEROS_OFICIAIS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+NUMEROS_FICTICIOS = [12, 24, 25, 26, 27, 28, 29]
 
 FAIXAS = {
     "goleiro": [1],
@@ -61,6 +66,7 @@ def sortear():
     if len(ativos) < 2:
         return jsonify({"erro": "Poucos jogadores ativos"}), 400
 
+    # 1. Divisão por posição para equilíbrio técnico
     categorias = {}
     for j in ativos:
         pos = j['posicao']
@@ -77,8 +83,12 @@ def sortear():
     resultado = {}
     data_hoje = datetime.datetime.now().strftime("%d/%m/%Y")
 
+    # 2. Processamento por Time (Verde e Branco)
     for cor, elenco in [("verde", verde), ("branco", branco)]:
+        if not elenco: continue
         random.shuffle(elenco)
+        
+        # Sorteio de Capitães (evitando repetir os últimos)
         candidatos = [j['nome'] for j in elenco if j['nome'] not in ULTIMOS_CAPITAES]
         if len(candidatos) < 2: candidatos = [j['nome'] for j in elenco]
         sorteados = random.sample(candidatos, min(len(candidatos), 2))
@@ -86,33 +96,55 @@ def sortear():
         cap = sorteados[0] if len(sorteados) >= 1 else "A definir"
         sup = sorteados[1] if len(sorteados) >= 2 else "A definir"
         
+        # --- LÓGICA DE NUMERAÇÃO HIERÁRQUICA ---
         numeros_disponiveis = {k: list(v) for k, v in FAIXAS.items()}
-        elenco_final = []
-        
-        # Reservar números fixos
+        proximo_automatico = 30 
+
+        # Passo A: Reservar números FIXOS para não serem sorteados por outros
         for j in elenco:
             num_f = NUMEROS_FIXOS.get(j['nome'])
-            if num_f and num_f in numeros_disponiveis.get(j['posicao'], []):
-                numeros_disponiveis[j['posicao']].remove(num_f)
+            if num_f:
+                for p in numeros_disponiveis:
+                    if num_f in numeros_disponiveis[p]:
+                        numeros_disponiveis[p].remove(num_f)
 
+        elenco_final = []
         for j in elenco:
+            # 1. Tenta número FIXO
             num = NUMEROS_FIXOS.get(j['nome'])
+            
+            # 2. Se não for fixo, sorteia da faixa priorizando Oficiais -> Fictícios
             if not num:
                 opcoes = numeros_disponiveis.get(j['posicao'], [])
-                if opcoes:
-                    num = random.choice(opcoes)
+                
+                # Filtra o que é oficial e o que é fictício dentro das opções da posição
+                oficiais_na_faixa = [n for n in opcoes if n in NUMEROS_OFICIAIS]
+                ficticios_na_faixa = [n for n in opcoes if n in NUMEROS_FICTICIOS]
+
+                if oficiais_na_faixa:
+                    num = random.choice(oficiais_na_faixa)
+                    numeros_disponiveis[j['posicao']].remove(num)
+                elif ficticios_na_faixa:
+                    num = random.choice(ficticios_na_faixa)
                     numeros_disponiveis[j['posicao']].remove(num)
                 else:
-                    num = random.randint(30, 99)
+                    # 3. Se esgotar tudo, entra número automático (30+)
+                    num = proximo_automatico
+                    proximo_automatico += 1
             
             elenco_final.append({
-                "nome": j['nome'], "posicao": j['posicao'], "numero": num,
-                "is_cap": j['nome'] == cap, "is_sup": j['nome'] == sup
+                "nome": j['nome'], 
+                "posicao": j['posicao'], 
+                "numero": num,
+                "is_cap": j['nome'] == cap, 
+                "is_sup": j['nome'] == sup
             })
 
         resultado[cor] = {
-            "jogadores": elenco_final, "data": data_hoje,
-            "cap": cap, "sup": sup
+            "jogadores": elenco_final, 
+            "data": data_hoje,
+            "cap": cap, 
+            "sup": sup
         }
     
     if "verde" in resultado and "branco" in resultado:
