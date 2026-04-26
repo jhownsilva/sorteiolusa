@@ -2,69 +2,24 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lusa Admin - Gestão de Elenco</title>
+    <title>Lusa F.C. - Sorteio de Times</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        .admin-container { max-width: 800px; margin: 40px auto; padding: 20px; background: #1e1e1e; border-radius: 15px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
-        .form-add { display: flex; gap: 10px; margin-bottom: 30px; padding: 15px; background: #2a2a2a; border-radius: 8px; }
-        input, select { padding: 8px; border-radius: 5px; border: 1px solid #444; background: #333; color: white; }
-        .btn-save { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-        .status-ativo { color: #2ecc71; }
-        .status-dm { color: #e74c3c; }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="admin-container">
-        <h2>⚙️ Gestão de Elenco Lusa F.C.</h2>
-        
-        <form class="form-add" action="/api/cadastrar" method="POST">
-            <input type="text" name="nome" placeholder="Nome do Jogador" required>
-            <select name="posicao">
-                <option value="goleiro">Goleiro</option>
-                <option value="zagueiro">Zagueiro</option>
-                <option value="lateral">Lateral</option>
-                <option value="volante">Volante</option>
-                <option value="meia">Meia</option>
-                <option value="atacante">Atacante</option>
-                <option value="centroavante">Centroavante</option>
-            </select>
-            <input type="number" name="fixo" placeholder="Nº Camisa">
-            <button type="submit" class="btn-save">➕ Adicionar</button>
-        </form>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Jogador</th>
-                    <th>Posição</th>
-                    <th>Status</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for j in jogadores %}
-                <tr>
-                    <td>{{ j.nome }}</td>
-                    <td>{{ j.posicao.upper() }}</td>
-                    <td class="status-{{ j.status }}">{{ j.status.upper() }}</td>
-                    <td>
-                        <form action="/api/alterar_status" method="POST" style="display:inline;">
-                            <input type="hidden" name="nome" value="{{ j.nome }}">
-                            <select name="novo_status" onchange="this.form.submit()">
-                                <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>Ativo</option>
-                                <option value="dm" {% if j.status == 'dm' %}selected{% endif %}>D.M</option>
-                                <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>Suspenso</option>
-                            </select>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-        <a href="/" style="color: #555; text-decoration: none;">⬅️ Voltar ao Campo</a>
+    <div class="header">
+        <a href="/login" class="btn-admin" style="color: #666; text-decoration: none; font-size: 12px; margin-right: 20px;">⚙️ Admin</a>
+        <button class="btn-sortear" onclick="realizarSorteio()">🎲 GERAR ESCALAÇÃO</button>
+        <button class="btn-baixar" id="btnDownload" onclick="baixarImagem()" style="display:none">📸 BAIXAR JPG</button>
     </div>
+
+    <div id="exportar-area">
+        <div class="dashboard">
+            <div id="campo-verde"></div>
+            <div id="campo-branco"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
