@@ -14,7 +14,7 @@ const jogadores = [
   { nome: "Breno", posicao: "lateral", ranking: 1 },
   { nome: "Gustavo", posicao: "lateral", ranking: 1 },
   { nome: "Davizinho", posicao: "volante", ranking: 1 },
-  { nome: "Thiago", posicao: "volante", ranking: 1 },
+  { nome: "Thiago G", posicao: "volante", ranking: 1 },
   { nome: "Mikael", posicao: "lateral", ranking: 1 },
   { nome: "Lucas", posicao: "centroavante", ranking: 1 },
   { nome: "Madruguinha", posicao: "centroavante", ranking: 1 },
@@ -70,72 +70,69 @@ function embaralhar(array) {
 
 function sortearTimes(jogadores, numTimes = 2) {
   const porPosicao = {};
-  
-  // Corrigido: Normalizando a posição para minúsculo para evitar erro de nomes diferentes
+
+  // Organiza por posição ignorando maiúsculas
   jogadores.forEach(jogador => {
-    const posicao = jogador.posicao.toLowerCase();
-    if (!porPosicao[posicao]) porPosicao[posicao] = [];
-    porPosicao[posicao].push(jogador);
+    const pos = jogador.posicao.toLowerCase();
+    if (!porPosicao[pos]) porPosicao[pos] = [];
+    porPosicao[pos].push(jogador);
   });
 
   const times = Array.from({ length: numTimes }, () => ({}));
 
+  // Distribui os jogadores
   for (const posicao in porPosicao) {
     const lista = embaralhar([...porPosicao[posicao]]);
     const total = lista.length;
     const base = Math.floor(total / numTimes);
     let extras = total % numTimes;
 
-    const limites = Array(numTimes).fill(base);
-    const ordemExtras = embaralhar([...Array(numTimes).keys()]);
-    for (let i = 0; i < extras; i++) {
-      limites[ordemExtras[i]]++;
-    }
-
     let jogadorIndex = 0;
-    for (let timeIndex = 0; timeIndex < numTimes; timeIndex++) {
-      if (!times[timeIndex][posicao]) times[timeIndex][posicao] = [];
-      while (times[timeIndex][posicao].length < limites[timeIndex]) {
-        times[timeIndex][posicao].push(lista[jogadorIndex]);
-        jogadorIndex++;
-      }
+    for (let i = 0; i < numTimes; i++) {
+      if (!times[i][posicao]) times[i][posicao] = [];
+      const quantidade = base + (extras > 0 ? 1 : 0);
+      times[i][posicao] = lista.slice(jogadorIndex, jogadorIndex + quantidade);
+      jogadorIndex += quantidade;
+      extras--;
     }
   }
 
   const resultado = {};
-  let proxNumeroLivre = 30; // Para jogadores que excederem a faixaNumeros
+  let numReserva = 30;
 
   times.forEach((time, i) => {
     const timeFinal = {};
-
     for (const posicao in time) {
-      // 1. Pega os números da faixa
       let disponiveis = [...(faixaNumeros[posicao] || [])];
       
-      // 2. Remove da lista de disponíveis os números que já são fixos de alguém neste time
+      // Filtra números que já são fixos de alguém NESTE time
       time[posicao].forEach(j => {
-        const fixo = jogadoresComNumeroFixo[j.nome];
-        if (fixo) {
-          disponiveis = disponiveis.filter(n => n !== fixo);
+        if (jogadoresComNumeroFixo[j.nome]) {
+          disponiveis = disponiveis.filter(n => n !== jogadoresComNumeroFixo[j.nome]);
         }
       });
 
-      const jogadoresFormatados = time[posicao].map(jogador => {
+      timeFinal[posicao] = time[posicao].map(jogador => {
         let numero;
         if (jogadoresComNumeroFixo[jogador.nome]) {
           numero = jogadoresComNumeroFixo[jogador.nome];
         } else if (disponiveis.length > 0) {
           numero = disponiveis.shift();
         } else {
-          numero = proxNumeroLivre++;
+          numero = numReserva++;
         }
         return `${numero} - ${jogador.nome}`;
       });
-      
-      timeFinal[posicao] = jogadoresFormatados;
     }
     resultado[`time${i + 1}`] = timeFinal;
   });
 
   return resultado;
 }
+
+function getListaBase() {
+  return jogadores;
+}
+
+// Se for rodar no navegador, remova ou comente a linha abaixo:
+// module.exports = { sortearTimes, getListaBase };
