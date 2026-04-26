@@ -9,13 +9,11 @@ app.secret_key = "lusa_2026_key"
 DATA_FILE = 'jogadores.json'
 
 def carregar_jogadores():
-    if not os.path.exists(DATA_FILE):
-        return []
+    if not os.path.exists(DATA_FILE): return []
     try:
         with open(DATA_FILE, 'r', encoding='utf-8') as f:
             return json.load(f)
-    except:
-        return []
+    except: return []
 
 def salvar_jogadores(lista):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
@@ -35,8 +33,7 @@ def login():
 
 @app.route('/admin')
 def admin():
-    if not session.get('admin'): 
-        return redirect(url_for('login'))
+    if not session.get('admin'): return redirect(url_for('login'))
     return render_template('admin.html', jogadores=carregar_jogadores())
 
 @app.route('/api/cadastrar', methods=['POST'])
@@ -59,8 +56,7 @@ def alterar_status():
     nome = request.form.get('nome')
     novo_status = request.form.get('novo_status')
     for j in lista:
-        if j['nome'] == nome:
-            j['status'] = novo_status
+        if j['nome'] == nome: j['status'] = novo_status
     salvar_jogadores(lista)
     return redirect(url_for('admin'))
 
