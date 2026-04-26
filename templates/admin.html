@@ -1,49 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Painel Admin - Lusa</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        table { width: 90%; margin: 20px auto; border-collapse: collapse; background: #222; }
-        th, td { padding: 12px; border: 1px solid #444; text-align: left; }
-        .status-ativo { color: #2ecc71; }
-        .status-dm { color: #e74c3c; }
-        .status-suspenso { color: #f1c40f; }
-        .btn-save { background: #27ae60; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <h1>Gestão de Elenco - Lusa 2026</h1>
-    <p>Marque quem está disponível para o sorteio de hoje.</p>
+<div class="admin-actions" style="margin: 20px; text-align: center;">
+    <button onclick="abrirModalCadastro()" class="btn" style="background: #28a745;">➕ Novo Jogador</button>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Jogador</th>
-                <th>Posição</th>
-                <th>Status Atual</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for j in jogadores %}
-            <tr>
-                <td>{{ j.nome }}</td>
-                <td>{{ j.posicao }}</td>
-                <td>
-                    <select name="status_{{ j.nome }}">
-                        <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>✅ Disponível</option>
-                        <option value="dm" {% if j.status == 'dm' %}selected{% endif %}>🚑 D.M (Lesionado)</option>
-                        <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>🚫 Suspenso</option>
-                    </select>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-    <button class="btn-save" onclick="alert('Funcionalidade de salvar via Python pendente!')">Salvar Alterações</button>
-    <br><br>
-    <a href="/" style="color: #3498db;">Voltar para o Campo</a>
-</body>
-</html>
+<table class="table-admin">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Posição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for j in jogadores %}
+        <tr>
+            <td>{{ j.nome }}</td>
+            <td>{{ j.posicao }}</td>
+            <td>
+                <button onclick="excluirJogador('{{ j.nome }}')" class="btn" style="background: #dc3545; padding: 5px 10px;">❌ Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+function excluirJogador(nome) {
+    if(confirm("Deseja realmente remover " + nome + "?")) {
+        // Aqui você fará o fetch para uma rota Python de delete
+        alert("Jogador removido do banco!");
+    }
+}
+</script>
