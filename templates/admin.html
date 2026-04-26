@@ -1,43 +1,67 @@
-<div class="admin-box">
-    <h3>➕ Cadastrar Novo Jogador</h3>
-    <form action="/api/cadastrar" method="POST">
-        <input type="text" name="nome" placeholder="Nome do Jogador" required>
-        <select name="posicao">
-            <option value="goleiro">Goleiro</option>
-            <option value="zagueiro">Zagueiro</option>
-            <option value="lateral">Lateral</option>
-            <option value="volante">Volante</option>
-            <option value="meia">Meia</option>
-            <option value="atacante">Atacante</option>
-            <option value="centroavante">Centroavante</option>
-        </select>
-        <input type="number" name="fixo" placeholder="Nº Camisa (Opcional)">
-        <button type="submit">CADASTRAR</button>
-    </form>
-</div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lusa Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .admin-wrap { max-width: 900px; margin: 20px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; }
+        .form-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
+        input, select { padding: 8px; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: white; }
+        .btn-add { background: #28a745; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
+        .btn-del { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrap">
+        <h2>➕ Novo Jogador</h2>
+        <form class="form-row" action="/api/cadastrar" method="POST">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <select name="posicao">
+                <option value="goleiro">Goleiro</option>
+                <option value="zagueiro">Zagueiro</option>
+                <option value="lateral">Lateral</option>
+                <option value="volante">Volante</option>
+                <option value="meia">Meia</option>
+                <option value="atacante">Atacante</option>
+                <option value="centroavante">Centroavante</option>
+            </select>
+            <input type="number" name="fixo" placeholder="Nº Camisa">
+            <button type="submit" class="btn-add">CADASTRAR</button>
+        </form>
 
-<hr>
-
-<h3>📋 Gestão de Elenco</h3>
-<table>
-    {% for j in jogadores %}
-    <tr>
-        <td>{{ j.nome }}</td>
-        <td>
-            <form action="/api/alterar_posicao" method="POST" style="display:inline;">
-                <input type="hidden" name="nome" value="{{ j.nome }}">
-                <select name="nova_posicao" onchange="this.form.submit()">
-                    <option value="{{ j.posicao }}">Atual: {{ j.posicao }}</option>
-                    <option value="goleiro">Goleiro</option>
-                    <option value="zagueiro">Zagueiro</option>
-                    <option value="lateral">Lateral</option>
-                    <option value="volante">Volante</option>
-                    <option value="meia">Meia</option>
-                    <option value="atacante">Atacante</option>
-                    <option value="centroavante">Centroavante</option>
-                </select>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        <h2>📋 Elenco Atual</h2>
+        <table>
+            <thead><tr><th>Nome</th><th>Posição</th><th>Status</th><th>Ação</th></tr></thead>
+            <tbody>
+                {% for j in jogadores %}
+                <tr>
+                    <td>{{ j.nome }}</td>
+                    <td>{{ j.posicao.upper() }}</td>
+                    <td>
+                        <form action="/api/alterar_status" method="POST">
+                            <input type="hidden" name="nome" value="{{ j.nome }}">
+                            <select name="novo_status" onchange="this.form.submit()" 
+                                    style="color: white; background: {% if j.status == 'dm' %}#e74c3c{% elif j.status == 'suspenso' %}#f1c40f{% else %}#2ecc71{% endif %};">
+                                <option value="ativo" {% if j.status == 'ativo' %}selected{% endif %}>Ativo</option>
+                                <option value="dm" {% if j.status == 'dm' %}selected{% endif %}>🚑 D.M</option>
+                                <option value="suspenso" {% if j.status == 'suspenso' %}selected{% endif %}>🚫 Suspenso</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/api/excluir" method="POST" onsubmit="return confirm('Excluir {{ j.nome }}?')">
+                            <input type="hidden" name="nome" value="{{ j.nome }}">
+                            <button type="submit" class="btn-del">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><a href="/" style="color: #007bff;">⬅️ Voltar ao Sorteio</a>
+    </div>
+</body>
+</html>
