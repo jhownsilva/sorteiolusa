@@ -1,33 +1,43 @@
-<div class="admin-actions" style="margin: 20px; text-align: center;">
-    <button onclick="abrirModalCadastro()" class="btn" style="background: #28a745;">➕ Novo Jogador</button>
+<div class="admin-box">
+    <h3>➕ Cadastrar Novo Jogador</h3>
+    <form action="/api/cadastrar" method="POST">
+        <input type="text" name="nome" placeholder="Nome do Jogador" required>
+        <select name="posicao">
+            <option value="goleiro">Goleiro</option>
+            <option value="zagueiro">Zagueiro</option>
+            <option value="lateral">Lateral</option>
+            <option value="volante">Volante</option>
+            <option value="meia">Meia</option>
+            <option value="atacante">Atacante</option>
+            <option value="centroavante">Centroavante</option>
+        </select>
+        <input type="number" name="fixo" placeholder="Nº Camisa (Opcional)">
+        <button type="submit">CADASTRAR</button>
+    </form>
 </div>
 
-<table class="table-admin">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Posição</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for j in jogadores %}
-        <tr>
-            <td>{{ j.nome }}</td>
-            <td>{{ j.posicao }}</td>
-            <td>
-                <button onclick="excluirJogador('{{ j.nome }}')" class="btn" style="background: #dc3545; padding: 5px 10px;">❌ Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<hr>
 
-<script>
-function excluirJogador(nome) {
-    if(confirm("Deseja realmente remover " + nome + "?")) {
-        // Aqui você fará o fetch para uma rota Python de delete
-        alert("Jogador removido do banco!");
-    }
-}
-</script>
+<h3>📋 Gestão de Elenco</h3>
+<table>
+    {% for j in jogadores %}
+    <tr>
+        <td>{{ j.nome }}</td>
+        <td>
+            <form action="/api/alterar_posicao" method="POST" style="display:inline;">
+                <input type="hidden" name="nome" value="{{ j.nome }}">
+                <select name="nova_posicao" onchange="this.form.submit()">
+                    <option value="{{ j.posicao }}">Atual: {{ j.posicao }}</option>
+                    <option value="goleiro">Goleiro</option>
+                    <option value="zagueiro">Zagueiro</option>
+                    <option value="lateral">Lateral</option>
+                    <option value="volante">Volante</option>
+                    <option value="meia">Meia</option>
+                    <option value="atacante">Atacante</option>
+                    <option value="centroavante">Centroavante</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
