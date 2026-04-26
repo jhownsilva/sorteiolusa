@@ -1,17 +1,9 @@
 async function realizarSorteio() {
-    console.log("Iniciando sorteio...");
     try {
         const res = await fetch('/api/sortear');
-        if (!res.ok) throw new Error("Erro na API");
         const dados = await res.json();
-        
         const box = document.getElementById('conteudo-sorteio');
-        if (!box) {
-            console.error("ERRO: Div 'conteudo-sorteio' não encontrada no HTML!");
-            return;
-        }
         
-        // --- ALTERAÇÃO AQUI: Cabeçalho com Logo e Data ---
         box.innerHTML = `
             <div style="text-align:center; margin-bottom: 20px; padding: 10px; border-bottom: 2px solid #ddd;">
                 <img src="/static/img/escudo.png" style="width: 80px; height: auto; margin-bottom: 10px;">
@@ -25,13 +17,11 @@ async function realizarSorteio() {
 
         document.getElementById('btnDownload').style.display = 'inline-block';
     } catch (e) {
-        console.error(e);
-        alert("Erro ao realizar o sorteio. Verifique se há jogadores ativos no Admin.");
+        alert("Erro ao realizar o sorteio.");
     }
 }
 
 function renderLista(time, mainBox, cor) {
-    if (!time) return;
     const section = document.createElement('div');
     section.className = `team-section ${cor}`;
     
@@ -51,7 +41,7 @@ function renderLista(time, mainBox, cor) {
             jogs.forEach(j => {
                 const mark = j.is_cap ? ' (C)' : (j.is_sup ? ' (S)' : '');
                 section.innerHTML += `
-                    <div class="player-row">
+                    <div class="player-row ${j.is_cap ? 'is-cap' : ''}">
                         <div class="player-num">${j.numero}</div>
                         <div class="player-info">${j.nome}${mark}</div>
                     </div>`;
@@ -63,14 +53,9 @@ function renderLista(time, mainBox, cor) {
 
 function baixarImagem() {
     const area = document.getElementById('exportar-area');
-    // Adicionei scale 3 para a imagem ficar ainda mais nítida no WhatsApp
-    html2canvas(area, { 
-        scale: 3, 
-        backgroundColor: "#f0f2f5",
-        useCORS: true // Ajuda a carregar o logo corretamente se estiver em pasta estática
-    }).then(canvas => {
+    html2canvas(area, { scale: 3, backgroundColor: "#f0f2f5", useCORS: true }).then(canvas => {
         const link = document.createElement('a');
-        link.download = `sorteio-lusa-${new Date().toLocaleDateString().replace(/\//g, '-')}.jpg`;
+        link.download = 'sorteio-lusa.jpg';
         link.href = canvas.toDataURL("image/jpeg", 0.9);
         link.click();
     });
