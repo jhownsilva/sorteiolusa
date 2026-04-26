@@ -1,43 +1,30 @@
-:root {
-    --verde-campo: #2e7d32;
-    --linha-campo: rgba(255, 255, 255, 0.5);
-}
-
-/* Estilo do Campo inspirado no Infográfico */
 .campo-container {
-    background: var(--verde-campo);
-    background-image: 
-        linear-gradient(var(--linha-campo) 2px, transparent 2px),
-        linear-gradient(90deg, var(--linha-campo) 2px, transparent 2px);
-    background-size: 100% 50px, 50px 100%;
-    border: 4px solid #fff;
-    border-radius: 15px;
-    height: 700px; /* Aumentado para caber todos */
+    background: #2e7d32;
+    background-image: linear-gradient(rgba(255,255,255,0.1) 2px, transparent 2px), 
+                      linear-gradient(90deg, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 50px 50px;
+    border: 5px solid #fff;
+    height: 750px;
     position: relative;
-    margin-bottom: 50px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-radius: 20px;
 }
 
-/* O "Card" do Jogador */
+/* O CARD DO JOGADOR IGUAL AO INFOGRÁFICO */
 .jogador-shirt {
     position: absolute;
-    width: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s;
+    width: 100px;
 }
 
-.jogador-shirt:hover { transform: scale(1.1); z-index: 100; }
-
-/* Círculo do Número */
 .shirt-icon {
-    width: 45px;
-    height: 45px;
-    background: #ffcc00; /* Amarelo como no exemplo */
+    width: 50px;
+    height: 50px;
+    background: #ffcc00; /* Amarelo */
     color: #000;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
     display: flex;
     align-items: center;
@@ -46,28 +33,15 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* Nome do Jogador abaixo do número */
 .nome-player {
-    background: rgba(0, 51, 153, 0.9); /* Azul escuro do exemplo */
+    background: linear-gradient(to right, #0044cc, #0022aa); /* Azul Lusa */
     color: white;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
-    margin-top: 5px;
-    white-space: nowrap;
+    margin-top: -5px; /* Sobrepõe levemente o círculo */
     text-transform: uppercase;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* Ajuste nos Títulos com Escudo */
-.titulo-time {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    font-size: 32px;
-    color: gold;
-    text-shadow: 2px 2px 4px #000;
-    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.2);
 }
