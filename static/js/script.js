@@ -3,34 +3,43 @@ async function realizarSorteio() {
         const response = await fetch('/api/sortear');
         const dados = await response.json();
         
-        renderizarTime(dados.verde, 'campo-verde');
-        renderizarTime(dados.branco, 'campo-branco');
-    } catch (error) {
-        console.error("Erro:", error);
-    }
+        renderizarLista(dados.verde, 'campo-verde', 'verde');
+        renderizarLista(dados.branco, 'campo-branco', 'branco');
+    } catch (e) { console.error("Erro no sorteio", e); }
 }
 
-function renderizarTime(jogadores, containerId) {
-    const campo = document.querySelector(`#${containerId} .area-campo`);
-    campo.innerHTML = ""; 
+function renderizarLista(timeData, containerId, classeCor) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    container.className = `team-column ${classeCor}`;
 
-    const contador = {};
+    const titulo = document.createElement('h2');
+    titulo.className = "team-title";
+    titulo.innerText = classeCor === 'verde' ? "TIME VERDE" : "TIME BRANCO";
+    container.appendChild(titulo);
 
-    jogadores.forEach((j) => {
-        const pos = j.posicao.toLowerCase();
-        if (!contador[pos]) contador[pos] = 1;
-        else contador[pos]++;
+    const ordens = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
 
-        const div = document.createElement('div');
-        
-        // Se for goleiro usa a classe fixa, se não usa a posição + número (ex: zagueiro-1)
-        let classePos = (pos === 'goleiro') ? 'pos-goleiro' : `pos-${pos}-${contador[pos]}`;
-        
-        div.className = `jogador-shirt ${classePos}`;
-        div.innerHTML = `
-            <div class="shirt-icon">${j.fixo || '?'}</div>
-            <div class="nome-player">${j.nome}</div>
-        `;
-        campo.appendChild(div);
+    ordens.forEach(posicao => {
+        if (timeData[posicao] && timeData[posicao].length > 0) {
+            const section = document.createElement('div');
+            section.className = "zona-section";
+            
+            section.innerHTML = `
+                <span class="zona-title">${posicao}s</span>
+                <div class="player-grid">
+                    ${timeData[posicao].map(jStr => {
+                        const [num, nome] = jStr.split(" - ");
+                        return `
+                            <div class="player-card">
+                                <div class="player-number">${num}</div>
+                                <div class="player-name">${nome}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            container.appendChild(section);
+        }
     });
 }
