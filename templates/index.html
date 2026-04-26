@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <img src="{{ url_for('static', filename='img/escudo.png') }}" width="150" style="margin-top:20px">
-    <button class="btn-sortear" onclick="realizarSorteio()">🎲 GERAR ESCALAÇÃO</button>
+    <div class="header">
+        <button class="btn-sortear" onclick="realizarSorteio()">🎲 GERAR ESCALAÇÃO</button>
+    </div>
 
     <div class="dashboard">
-        <div class="campo-container" id="campo-verde">
-            <h2 style="text-align:center">TIME VERDE</h2>
-            <div class="area-campo"></div>
-        </div>
-
-        <div class="campo-container" id="campo-branco">
-            <h2 style="text-align:center">TIME BRANCO</h2>
-            <div class="area-campo"></div>
-        </div>
+        <div id="campo-verde"></div>
+        <div id="campo-branco"></div>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
