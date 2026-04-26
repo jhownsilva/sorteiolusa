@@ -113,4 +113,3 @@ function sortearTimes(listaJogadores, numTimes = 2) {
 function getListaBase() {
   return jogadores;
 }
-        
