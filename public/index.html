@@ -34,7 +34,7 @@
 <div class="controls">
   <button onclick="sortear()">🎲 Sortear Times</button>
   <button onclick="toggleJogadoresExtras()">Usar jogadores adicionais</button>
-  <button class="kickoff" onclick="alert('Bom jogo!')">KICK-OFF</button>
+  <button class="kickoff" onclick="alert('Boa partida!')">KICK-OFF</button>
   <button onclick="baixarImagem()">📸 Salvar como Imagem (.JPG)</button>
 </div>
 
@@ -46,7 +46,6 @@
 <script>
   let jogadoresExtras = JSON.parse(localStorage.getItem("jogadores")) || [];
   let usarExtras = false;
-
   const ordemZonas = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
 
   function toggleJogadoresExtras() {
@@ -55,33 +54,28 @@
   }
 
   function sortear() {
-    // Pegando a lista base diretamente do sorteio.js carregado
+    // O pulo do gato: usamos a função que já está carregada pelo sorteio.js
     const base = getListaBase();
     const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
-    
-    // Sorteando
-    const dadosSorteados = sortearTimes(listaFinal);
-    
-    // Renderizando na tela
-    renderizar(dadosSorteados);
+    const resultado = sortearTimes(listaFinal);
+    renderizar(resultado);
   }
 
   function renderizar(dados) {
     const container = document.getElementById("resultado");
     container.innerHTML = "";
 
-    Object.entries(dados).forEach(([timeKey, setores], i) => {
+    Object.entries(dados).forEach(([key, setores], i) => {
       const teamDiv = document.createElement("div");
-      const teamName = i === 0 ? "TIME VERDE" : "TIME BRANCO";
       teamDiv.className = i === 0 ? "team team1" : "team team2";
-      teamDiv.innerHTML = `<h2>${teamName}</h2>`;
+      teamDiv.innerHTML = `<h2>${i === 0 ? 'TIME VERDE' : 'TIME BRANCO'}</h2>`;
 
-      const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
-      const capitaes = escolherCapitaes(todosJogadores, 2);
+      const todosNomes = Object.values(setores).flat().map(j => j.split(" - ")[1]);
+      const caps = todosNomes.sort(() => 0.5 - Math.random()).slice(0, 2);
       
       const capDiv = document.createElement("div");
       capDiv.className = "capitaes";
-      capDiv.innerHTML = `<h3>🧢 Capitães:</h3><ul>${capitaes.map(c => `<li>${c}</li>`).join('')}</ul>`;
+      capDiv.innerHTML = `<h3>🧢 Capitães:</h3><ul>${caps.map(c => `<li>${c}</li>`).join('')}</ul>`;
       teamDiv.appendChild(capDiv);
 
       ordemZonas.forEach(pos => {
@@ -90,13 +84,11 @@
           zonaDiv.className = "zona";
           zonaDiv.innerHTML = `<h3>${pos.toUpperCase()}S</h3><div class="cards"></div>`;
           const cardsCtx = zonaDiv.querySelector(".cards");
-
           setores[pos].forEach(jStr => {
-            const [numero, ...resto] = jStr.split(" - ");
-            const nome = resto.join(" - ");
+            const [num, nome] = jStr.split(" - ");
             const card = document.createElement("div");
             card.className = "card";
-            card.innerHTML = `<div class="numero">${numero}</div><div class="nome">${nome}</div>`;
+            card.innerHTML = `<div class="numero">${num}</div><div class="nome">${nome}</div>`;
             cardsCtx.appendChild(card);
           });
           teamDiv.appendChild(zonaDiv);
@@ -106,20 +98,10 @@
     });
   }
 
-  function escolherCapitaes(lista, quantia) {
-    const copia = [...lista];
-    const sorteados = [];
-    while (sorteados.length < quantia && copia.length > 0) {
-      const idx = Math.floor(Math.random() * copia.length);
-      sorteados.push(copia.splice(idx, 1)[0]);
-    }
-    return sorteados;
-  }
-
   function baixarImagem() {
     html2canvas(document.getElementById('resultado')).then(canvas => {
       const link = document.createElement("a");
-      link.download = "sorteio-lusa.jpg";
+      link.download = "sorteio.jpg";
       link.href = canvas.toDataURL("image/jpeg");
       link.click();
     });
