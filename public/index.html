@@ -180,20 +180,20 @@
     btn.textContent = usarExtras ? "Desativar jogadores extras" : "Usar jogadores adicionais";
   }
 
-  // Função principal corrigida para o Render
+  // ESTA É A FUNÇÃO QUE ESTAVA DANDO ERRO E AGORA ESTÁ CORRIGIDA
   function sortear() {
-    // Pegamos a base direto do sorteio.js carregado na memória
+    // 1. Pegamos a lista de jogadores diretamente do sorteio.js
     const base = getListaBase(); 
-    const listaFinal = usarExtras ? [...base, ...jogadoresExtras] : base;
+    const dadosParaSorteio = usarExtras ? [...base, ...jogadoresExtras] : base;
     
-    // Realizamos o sorteio
-    const resultado = sortearTimes(listaFinal);
+    // 2. Realizamos o sorteio localmente (sem fetch)
+    const resultado = sortearTimes(dadosParaSorteio);
     
-    // Desenhamos na tela
-    renderizarSorteio(resultado);
+    // 3. Chamamos a função para desenhar na tela
+    desenharTimesNaTela(resultado);
   }
 
-  function renderizarSorteio(dados) {
+  function desenharTimesNaTela(dados) {
     const container = document.getElementById("resultado");
     container.innerHTML = "";
 
@@ -203,7 +203,7 @@
       teamDiv.className = i === 0 ? "team team1" : "team team2";
       teamDiv.innerHTML = `<h2>${teamName}</h2>`;
 
-      // Selecionar capitães
+      // Lógica de Capitães
       const todosJogadores = Object.values(setores).flat().map(j => j.split(" - ").slice(1).join(" - "));
       const capitaes = escolherCapitaes(todosJogadores, 2);
 
@@ -217,7 +217,6 @@
           const zonaDiv = document.createElement("div");
           zonaDiv.className = "zona";
           zonaDiv.innerHTML = `<h3>${pos.toUpperCase()}S</h3><div class="cards"></div>`;
-
           const cardsContainer = zonaDiv.querySelector(".cards");
 
           setores[pos].forEach(jogadorStr => {
@@ -225,17 +224,12 @@
             const nome = resto.join(" - ");
             const card = document.createElement("div");
             card.className = "card";
-            card.innerHTML = `
-              <div class="numero">${numero}</div>
-              <div class="nome">${nome}</div>
-            `;
+            card.innerHTML = `<div class="numero">${numero}</div><div class="nome">${nome}</div>`;
             cardsContainer.appendChild(card);
           });
-
           teamDiv.appendChild(zonaDiv);
         }
       });
-
       container.appendChild(teamDiv);
     });
   }
@@ -254,12 +248,8 @@
     const alvo = document.getElementById('resultado');
     html2canvas(alvo).then(canvas => {
       const link = document.createElement("a");
-      link.download = "sorteio-times.jpg";
+      link.download = "sorteio-lusa.jpg";
       link.href = canvas.toDataURL("image/jpeg", 1.0);
       link.click();
     });
   }
-</script>
-
-</body>
-</html>
