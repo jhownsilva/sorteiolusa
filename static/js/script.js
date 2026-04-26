@@ -1,46 +1,42 @@
-async function realizarSorteio() {
-    const res = await fetch('/api/sortear');
-    const dados = await res.json();
+function baixarImagem() {
+    console.log("Iniciando captura da imagem...");
     const area = document.getElementById('exportar-area');
     
-    area.innerHTML = `
-        <img src="/static/img/escudo.png" class="escudo-lusa">
-        <div class="data-sorteio">SORTEIO: ${dados.verde.data}</div>
-        <div id="verde-lista"></div>
-        <div id="branco-lista"></div>
-    `;
+    // Verificação de segurança
+    if (!area) {
+        alert("Erro: Área de exportação não encontrada!");
+        return;
+    }
 
-    renderLista(dados.verde, 'verde-lista', 'verde');
-    renderLista(dados.branco, 'branco-lista', 'branco');
-    document.getElementById('btnDownload').style.display = 'block';
-}
-
-function renderLista(time, id, cor) {
-    const div = document.getElementById(id);
-    div.className = `team-section ${cor}`;
-    div.innerHTML = `
-        <div class="team-header ${cor}-header">TIME ${cor.toUpperCase()}</div>
-        <div class="cap-box">
-            <b>🌟 CAPITÃO:</b> ${time.cap} <br>
-            <b>🎖️ SUPLENTE:</b> ${time.sup}
-        </div>
-    `;
-
-    const ordens = ["goleiro", "zagueiro", "lateral", "volante", "meia", "atacante", "centroavante"];
-    ordens.forEach(pos => {
-        const jogs = time.jogadores.filter(j => j.posicao === pos);
-        if (jogs.length > 0) {
-            div.innerHTML += `<div class="pos-label">${pos}s</div>`;
-            jogs.forEach(j => {
-                const capMark = j.is_cap ? ' (C)' : (j.is_sup ? ' (S)' : '');
-                div.innerHTML += `
-                    <div class="player-row ${j.is_cap ? 'is-cap' : ''}">
-                        <div class="player-num">${j.numero}</div>
-                        <div class="player-info">${j.nome}${capMark}</div>
-                    </div>
-                `;
-            });
+    html2canvas(area, { 
+        scale: 2, // Melhora a resolução para o WhatsApp
+        backgroundColor: "#f0f2f5", // Mantém o fundo limpo
+        logging: true, // Ajuda a identificar erros no F12
+        useCORS: true  // Essencial se você estiver usando imagens externas (como o escudo)
+    }).then(canvas => {
+        try {
+            // Converte para JPG
+            const imgData = canvas.toDataURL("image/jpeg", 0.9);
+            
+            // Cria um elemento de link temporário "invisível"
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = imgData;
+            link.download = 'escalacao-lusa-fc.jpg';
+            
+            // Adiciona ao corpo da página, clica e remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log("Download iniciado com sucesso!");
+        } catch (err) {
+            console.error("Erro ao gerar link de download:", err);
+            alert("Erro ao baixar a imagem. Tente tirar um print.");
         }
+    }).catch(error => {
+        console.error("Erro no html2canvas:", error);
+        alert("Falha técnica ao gerar a imagem.");
     });
 }
 
