@@ -8,7 +8,6 @@ app.secret_key = "lusa_2026_key"
 
 DATA_FILE = 'jogadores.json'
 
-# Função para garantir que o arquivo JSON exista com uma lista vazia se não for encontrado
 def carregar_jogadores():
     if not os.path.exists(DATA_FILE):
         return []
@@ -43,11 +42,10 @@ def admin():
 @app.route('/api/cadastrar', methods=['POST'])
 def cadastrar():
     lista = carregar_jogadores()
-    # Pega o número fixo e garante que seja tratado como número ou vazio
     fixo_val = request.form.get('fixo')
     novo = {
         "nome": request.form['nome'],
-        "posicao": request.form['posicao'].lower(), # Salva sempre em minúsculo para o CSS bater
+        "posicao": request.form['posicao'].lower(),
         "fixo": int(fixo_val) if fixo_val and fixo_val.isdigit() else None,
         "status": "ativo"
     }
@@ -55,45 +53,42 @@ def cadastrar():
     salvar_jogadores(lista)
     return redirect(url_for('admin'))
 
-@app.route('/api/alterar_posicao', methods=['POST'])
-def alterar_posicao():
+@app.route('/api/alterar_status', methods=['POST'])
+def alterar_status():
     lista = carregar_jogadores()
-    nome = request.form['nome']
-    nova_pos = request.form['nova_posicao'].lower()
+    nome = request.form.get('nome')
+    novo_status = request.form.get('novo_status')
     for j in lista:
         if j['nome'] == nome:
-            j['posicao'] = nova_pos
+            j['status'] = novo_status
     salvar_jogadores(lista)
+    return redirect(url_for('admin'))
+
+@app.route('/api/excluir', methods=['POST'])
+def excluir():
+    lista = carregar_jogadores()
+    nome = request.form.get('nome')
+    nova_lista = [j for j in lista if j['nome'] != nome]
+    salvar_jogadores(nova_lista)
     return redirect(url_for('admin'))
 
 @app.route('/api/sortear')
 def sortear():
     ativos = [j for j in carregar_jogadores() if j['status'] == 'ativo']
-    
-    # --- Lógica de Equilíbrio por Posição ---
-    # Separamos os jogadores por posição para distribuir um de cada para cada time
     categorias = {}
     for j in ativos:
         pos = j['posicao']
         if pos not in categorias: categorias[pos] = []
         categorias[pos].append(j)
     
-    verde = []
-    branco = []
-    
+    verde, branco = [], []
     for pos in categorias:
         random.shuffle(categorias[pos])
         for i, jogador in enumerate(categorias[pos]):
-            # Limita a 11 jogadores por time (22 no total)
-            if len(verde) < 11 or len(branco) < 11:
-                if i % 2 == 0 and len(verde) < 11:
-                    verde.append(jogador)
-                elif len(branco) < 11:
-                    branco.append(jogador)
-
+            if i % 2 == 0: verde.append(jogador)
+            else: branco.append(jogador)
     return jsonify({"verde": verde, "branco": branco})
 
 if __name__ == "__main__":
-    # Importante para o Render capturar a porta correta
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
