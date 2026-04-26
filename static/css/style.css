@@ -3,12 +3,13 @@
     --card-bg: #1a1a1a;
     --verde-lusa: linear-gradient(135deg, #138d43, #e01919); /* Verde e Vermelho */
     --branco-lusa: linear-gradient(135deg, #ffffff, #a0a0a0); /* Branco e Cinza */
+    --accent-blue: #007bff;
 }
 
 body {
     background-color: var(--bg-dark);
     color: #e0e0e0;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -16,111 +17,142 @@ body {
     align-items: center;
 }
 
-.header { text-align: center; margin-bottom: 30px; width: 100%; }
+/* Cabeçalho e Botões */
+.header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-sortear, .btn-baixar {
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
 
 .btn-sortear {
     background: var(--verde-lusa);
-    color: white; 
-    border: 2px solid rgba(255,255,255,0.2); 
-    padding: 15px 50px;
-    border-radius: 50px; 
-    font-weight: bold; 
-    cursor: pointer;
-    font-size: 18px; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
+    color: white;
 }
 
-.btn-sortear:hover { transform: scale(1.05); }
+.btn-baixar {
+    background: #444;
+    color: white;
+}
+
+.btn-sortear:hover, .btn-baixar:hover {
+    transform: scale(1.05);
+}
+
+/* Área de Exportação (O que sai na foto) */
+#exportar-area {
+    padding: 20px;
+    background-color: var(--bg-dark);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 1150px;
+}
 
 .dashboard {
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: center; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
-    width: 100%;
-    max-width: 1200px;
 }
 
-/* Coluna de cada Time */
+/* Colunas dos Times */
 .team-column {
-    flex: 1; 
-    min-width: 350px; 
-    max-width: 550px;
-    background: var(--card-bg); 
+    flex: 1;
+    min-width: 350px;
+    max-width: 520px;
+    background: var(--card-bg);
     border-radius: 15px;
-    padding: 25px; 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    padding: 20px;
     border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .team-title {
-    text-align: center; 
-    font-size: 26px; 
-    padding-bottom: 15px;
-    border-bottom: 2px solid #333; 
-    margin-bottom: 25px;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
     letter-spacing: 2px;
 }
 
-.zona-section { margin-bottom: 30px; }
+/* Seções de Posição (Zonas) */
+.zona-section {
+    margin-bottom: 20px;
+}
 
 .zona-title {
-    font-size: 11px; 
-    color: #777; 
+    font-size: 11px;
+    color: #888;
     text-transform: uppercase;
-    letter-spacing: 3px; 
-    margin-bottom: 12px; 
+    letter-spacing: 2px;
+    margin-bottom: 10px;
     display: block;
     border-left: 3px solid #444;
     padding-left: 10px;
 }
 
-.player-grid { 
+.player-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px; 
+    gap: 10px;
 }
 
-/* O Card do Jogador */
+/* Card do Jogador */
 .player-card {
-    display: flex; 
-    align-items: center; 
-    background: #252525; 
-    border-radius: 8px; 
+    display: flex;
+    align-items: center;
+    background: #252525;
+    border-radius: 6px;
     overflow: hidden;
-    height: 45px;
-    transition: background 0.3s;
+    height: 42px;
+    border: 1px solid #333;
 }
-
-.player-card:hover { background: #303030; }
 
 .player-number {
-    width: 40px; 
-    height: 100%; 
-    display: flex; 
+    width: 35px;
+    height: 100%;
+    display: flex;
     align-items: center;
-    justify-content: center; 
-    font-weight: 900; 
-    font-size: 16px;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 15px;
 }
 
-.player-name { 
-    padding: 0 12px; 
-    font-size: 13px; 
-    font-weight: bold; 
+.player-name {
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: bold;
     text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Cores específicas aplicadas pelo JavaScript */
+/* Cores por Time */
 .verde .player-card { border-left: 4px solid #138d43; }
 .verde .player-number { background: var(--verde-lusa); color: white; }
 
 .branco .player-card { border-left: 4px solid #fff; }
 .branco .player-number { background: var(--branco-lusa); color: black; }
 
-/* Estilo para quando não tem número */
-.no-number { font-size: 12px; opacity: 0.5; }
+/* Responsividade */
+@media (max-width: 768px) {
+    .team-column {
+        min-width: 100%;
+    }
+}
