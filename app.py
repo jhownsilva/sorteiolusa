@@ -1,49 +1,48 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import random
-import json
-import os
 
 app = Flask(__name__)
-app.secret_key = "lusa_secret_key"
+app.secret_key = "lusa_secret_2026"
 
-# Dados iniciais e numeração por zona
-ZONAS = {
-    "goleiro": [1], "zagueiro": [3, 4, 13, 12, 26], "lateral": [2, 6, 14, 25, 28],
-    "volante": [5, 15, 16, 24, 27], "meia": [18, 8, 10, 17],
-    "atacante": [11, 7, 27, 29], "centroavante": [9, 23, 22]
-}
+# Banco de dados temporário (em produção usaríamos um arquivo JSON ou SQLite)
+jogadores_db = [
+    {"nome": "Felipe", "posicao": "goleiro", "status": "ativo"},
+    {"nome": "Guilherme Felix", "posicao": "zagueiro", "status": "ativo", "fixo": 19},
+    {"nome": "Jackson", "posicao": "meia", "status": "ativo", "fixo": 21},
+    {"nome": "Madruguinha", "posicao": "centroavante", "status": "ativo", "fixo": 20},
+    # Adicione os demais aqui...
+]
 
-FIXOS = {'Guilherme Felix': 19, 'Jackson': 21, 'Madruguinha': 20}
-
-# Rota de Login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        if request.form['username'] == 'admin' and request.form['password'] == 'admin':
-            session['logged_in'] = True
-            return redirect(url_for('admin'))
-    return render_template('login.html')
-
-# Rota do Sorteio (Página Principal)
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Lógica do Sorteio
-@app.route('/sortear', methods=['POST'])
-def sortear():
-    # Recebe a lista de jogadores ativos do frontend
-    jogadores_input = request.json['jogadores'] 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['user'] == 'admin' and request.form['pass'] == 'admin':
+            session['admin'] = True
+            return redirect(url_for('admin'))
+    return render_template('login.html')
+
+@app.route('/admin')
+def admin():
+    if not session.get('admin'):
+        return redirect(url_for('login'))
+    return render_template('admin.html', jogadores=jogadores_db)
+
+@app.route('/api/sortear', methods=['GET'])
+def api_sortear():
+    # Filtra apenas quem não está no DM ou Suspenso
+    ativos = [j for j in jogadores_db if j['status'] == 'ativo']
+    random.shuffle(ativos)
     
-    random.shuffle(jogadores_input)
-    
-    # Separação por posição para os dois times
-    time_verde = []
-    time_branco = []
-    
-    # ... Lógica de divisão por zonas ...
-    
-    return jsonify({"verde": time_verde, "branco": time_branco})
+    # Lógica simples de divisão (Meio a meio)
+    meio = len(ativos) // 2
+    return jsonify({
+        "verde": ativos[:meio],
+        "branco": ativos[meio:]
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

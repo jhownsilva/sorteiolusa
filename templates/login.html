@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Lusa Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div style="margin-top: 100px;">
+        <h2>Acesso Administrativo</h2>
+        <form method="POST">
+            <input type="text" name="user" placeholder="Usuário" required><br><br>
+            <input type="password" name="pass" placeholder="Senha" required><br><br>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
