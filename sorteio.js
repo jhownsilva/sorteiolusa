@@ -13,8 +13,8 @@ const jogadores = [
   { nome: "Giovanni Rocha", posicao: "lateral", ranking: 1 },
   { nome: "Breno", posicao: "lateral", ranking: 1 },
   { nome: "Gustavo", posicao: "lateral", ranking: 1 },
-  { nome: "Davizinho", posicao: "Volante", ranking: 1 },
-  { nome: "Thiago", posicao: "Volante", ranking: 1 },
+  { nome: "Davizinho", posicao: "volante", ranking: 1 },
+  { nome: "Thiago", posicao: "volante", ranking: 1 },
   { nome: "Mikael", posicao: "lateral", ranking: 1 },
   { nome: "Lucas", posicao: "centroavante", ranking: 1 },
   { nome: "Madruguinha", posicao: "centroavante", ranking: 1 },
@@ -44,7 +44,7 @@ const jogadores = [
   { nome: "Fagner", posicao: "zagueiro", ranking: 1 },
   { nome: "Jorel", posicao: "zagueiro", ranking: 1 },
   { nome: "Romario", posicao: "zagueiro", ranking: 1 },
-  { nome: "Thiago", posicao: "goleiro", ranking: 1 },
+  { nome: "Thiago Gkay", posicao: "goleiro", ranking: 1 },
   { nome: "Felipe", posicao: "goleiro", ranking: 1 },
 ];
 
