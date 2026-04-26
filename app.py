@@ -61,8 +61,6 @@ def admin():
         return redirect(url_for('login'))
     return render_template('admin.html', jogadores=carregar_jogadores())
 
-# --- AS ROTAS QUE ESTAVAM FALTANDO E CAUSAVAM O 404 ---
-
 @app.route('/api/cadastrar', methods=['POST'])
 def cadastrar():
     if not session.get('admin'): return redirect(url_for('login'))
@@ -97,16 +95,21 @@ def excluir():
     salvar_jogadores(nova_lista)
     return redirect(url_for('admin'))
 
-# --- LÓGICA DO SORTEIO ---
+# --- LÓGICA DO SORTEIO ATUALIZADA ---
 
 @app.route('/api/sortear')
 def sortear():
     global ULTIMOS_CAPITAES
-    ativos = [j for j in carregar_jogadores() if j['status'] == 'ativo']
+    todos = carregar_jogadores()
+    
+    # Separa ativos e desfalques
+    ativos = [j for j in todos if j['status'] == 'ativo']
+    desfalques = [j for j in todos if j['status'] in ['dm', 'suspenso']]
     
     if len(ativos) < 2:
         return jsonify({"erro": "Poucos jogadores ativos"}), 400
 
+    # Agrupa por posição
     categorias = {}
     for j in ativos:
         pos = j['posicao']
@@ -114,16 +117,19 @@ def sortear():
         categorias[pos].append(j)
 
     verde, branco = [], []
-    for pos, lista in categorias.items():
-        random.shuffle(lista)
-        for i, jog in enumerate(lista):
+    
+    # Distribui alternadamente para garantir equilíbrio e aleatoriedade
+    for pos in categorias:
+        random.shuffle(categorias[pos]) # Embaralha a posição antes de distribuir
+        for i, jog in enumerate(categorias[pos]):
             if i % 2 == 0: verde.append(jog)
             else: branco.append(jog)
 
-    resultado = {}
+    resultado = {"verde": {}, "branco": {}, "desfalques": desfalques}
     data_hoje = datetime.datetime.now().strftime("%d/%m/%Y")
 
-    for cor, elenco in [("verde", verde), ("branco", branco)]:
+    for cor in ["verde", "branco"]:
+        elenco = verde if cor == "verde" else branco
         if not elenco: continue
         random.shuffle(elenco)
         
@@ -137,6 +143,7 @@ def sortear():
         numeros_disponiveis = {k: list(v) for k, v in FAIXAS.items()}
         proximo_automatico = 30 
 
+        # Reserva números fixos
         for j in elenco:
             num_f = NUMEROS_FIXOS.get(j['nome'])
             if num_f:
@@ -149,14 +156,14 @@ def sortear():
             num = NUMEROS_FIXOS.get(j['nome'])
             if not num:
                 opcoes = numeros_disponiveis.get(j['posicao'], [])
-                oficiais_na_faixa = [n for n in opcoes if n in NUMEROS_OFICIAIS]
-                ficticios_na_faixa = [n for n in opcoes if n in NUMEROS_FICTICIOS]
+                oficiais = [n for n in opcoes if n in NUMEROS_OFICIAIS]
+                ficticios = [n for n in opcoes if n in NUMEROS_FICTICIOS]
 
-                if oficiais_na_faixa:
-                    num = random.choice(oficiais_na_faixa)
+                if oficiais:
+                    num = random.choice(oficiais)
                     numeros_disponiveis[j['posicao']].remove(num)
-                elif ficticios_na_faixa:
-                    num = random.choice(ficticios_na_faixa)
+                elif ficticios:
+                    num = random.choice(ficticios)
                     numeros_disponiveis[j['posicao']].remove(num)
                 else:
                     num = proximo_automatico
