@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="controls">
+        <a href="/login" class="btn">Área Admin</a>
+        <button onclick="realizarSorteio()">🎲 GERAR ESCALAÇÃO</button>
+    </div>
+
+    <div class="campo-container" id="campo-verde">
+        <h2 class="titulo-time">TIME VERDE</h2>
+        <div class="area-campo"></div>
+    </div>
+
+    <div class="campo-container" id="campo-branco">
+        <h2 class="titulo-time">TIME BRANCO</h2>
+        <div class="area-campo"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
