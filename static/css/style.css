@@ -4,30 +4,25 @@
     --degrade-branco: linear-gradient(135deg, #333, #000);
 }
 
-body { background: var(--bg-gray); font-family: 'Poppins', sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+body { background: var(--bg-gray); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
 
-#exportar-area { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; text-align: center; }
+#exportar-area { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 450px; }
 
-.escudo-lusa { width: 120px; margin-bottom: 10px; }
-.data-sorteio { font-weight: bold; color: #666; margin-bottom: 20px; display: block; }
+.team-section { margin-bottom: 35px; }
 
-.team-section { margin-bottom: 40px; width: 100%; }
-
-.team-header { padding: 15px; border-radius: 10px; color: white; font-weight: 900; font-size: 22px; margin-bottom: 15px; text-transform: uppercase; }
+.team-header { padding: 15px; border-radius: 10px; color: white; font-weight: 900; font-size: 22px; margin-bottom: 15px; text-align: center; }
 .verde-header { background: var(--degrade-verde); }
 .branco-header { background: var(--degrade-branco); }
 
-.cap-box { background: #fff5f5; border: 1px dashed #ffcccc; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; font-size: 13px; }
+.cap-box { background: #fff5f5; border: 1px dashed #ffcccc; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; text-align: left; }
 
 .player-row {
-    display: flex; align-items: center; background: white; 
-    border: 1px solid #ddd; border-radius: 8px; margin-bottom: 6px; 
-    height: 45px; overflow: hidden;
+    display: flex; align-items: center; background: white; border: 1px solid #ddd; 
+    border-radius: 8px; margin-bottom: 6px; height: 45px; overflow: hidden;
 }
 
 .player-num {
-    width: 45px; height: 100%; display: flex; align-items: center; 
-    justify-content: center; font-weight: 900; color: white;
+    width: 45px; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white;
 }
 
 .verde .player-num { background: var(--degrade-verde); }
@@ -35,6 +30,10 @@ body { background: var(--bg-gray); font-family: 'Poppins', sans-serif; padding: 
 
 .player-info { padding-left: 15px; font-weight: 700; font-size: 14px; text-transform: uppercase; color: #333; }
 
-.pos-label { font-size: 10px; color: #999; text-transform: uppercase; margin: 10px 0 5px; text-align: left; font-weight: 800; }
+.pos-label { font-size: 10px; color: #999; text-transform: uppercase; margin: 10px 0 5px; text-align: left; font-weight: 800; padding-left: 5px; }
 
 .is-cap { border: 2px solid #ffbc00 !important; background: #fffdf0; }
+
+.header { margin-bottom: 20px; }
+.btn-sortear { background: #138d43; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; margin: 5px; }
+.btn-baixar { background: #333; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; margin: 5px; }
