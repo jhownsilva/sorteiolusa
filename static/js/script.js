@@ -1,17 +1,26 @@
 async function realizarSorteio() {
-    const response = await fetch('/api/sortear');
-    const dados = await response.json();
+    const btn = document.querySelector('button');
+    btn.textContent = "SORTEANDO...";
     
-    renderizarTime(dados.verde, 'campo-verde', 'Verde');
-    renderizarTime(dados.branco, 'campo-branco', 'Branco');
+    try {
+        const response = await fetch('/api/sortear');
+        const dados = await response.json();
+        
+        renderizarTime(dados.verde, 'campo-verde', 'Verde');
+        renderizarTime(dados.branco, 'campo-branco', 'Branco');
+        
+        btn.textContent = "🎲 GERAR ESCALAÇÃO";
+    } catch (err) {
+        alert("Erro ao realizar sorteio. Verifique o servidor.");
+        btn.textContent = "🎲 GERAR ESCALAÇÃO";
+    }
 }
 
 function renderizarTime(jogadores, containerId, cor) {
     const campo = document.querySelector(`#${containerId} .area-campo`);
+    if (!campo) return;
+    
     campo.innerHTML = ""; 
-
-    // Objeto para contar quantos jogadores de cada posição já foram colocados
-    // para evitar que dois zagueiros fiquem no mesmo lugar
     const contadorPosicao = {};
 
     jogadores.forEach((j) => {
@@ -20,17 +29,16 @@ function renderizarTime(jogadores, containerId, cor) {
         else contadorPosicao[posKey]++;
 
         const div = document.createElement('div');
-        
-        // Atribui a classe de posição (ex: pos-zagueiro-1, pos-zagueiro-2)
         const classePosicao = `pos-${posKey}-${contadorPosicao[posKey]}`;
-        
-        // Caso especial para Goleiro que geralmente é só um
         const classeFinal = posKey === 'goleiro' ? 'pos-goleiro' : classePosicao;
 
         div.className = `jogador-shirt ${classeFinal}`;
         
+        const bgUniforme = cor === 'Verde' ? 'var(--verde-lusa)' : 'var(--branco-lusa)';
+        const corTexto = cor === 'Verde' ? '#fff' : '#000';
+
         div.innerHTML = `
-            <div class="shirt-icon" style="background: ${cor === 'Verde' ? '#138d43' : '#fff'}; color: ${cor === 'Verde' ? '#fff' : '#000'}">
+            <div class="shirt-icon" style="background: ${bgUniforme}; color: ${corTexto}">
                 ${j.fixo || '?'}
             </div>
             <div class="nome-player">${j.nome}</div>
