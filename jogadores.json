@@ -10,6 +10,8 @@
     { "nome": "André", "posicao": "lateral", "fixo": null, "status": "ativo" },
     { "nome": "Breno", "posicao": "lateral", "fixo": null, "status": "ativo" },
     { "nome": "Giovanni Rocha", "posicao": "lateral", "fixo": null, "status": "ativo" },
+    { "nome": "Paulo Pimentel", "posicao": "zagueiro", "fixo": null, "status": "ativo" },
+    { "nome": "Diego Moura", "posicao": "zagueiro", "fixo": null, "status": "ativo" },
     { "nome": "Gustavo", "posicao": "lateral", "fixo": null, "status": "ativo" },
     { "nome": "Henrique", "posicao": "lateral", "fixo": null, "status": "ativo" },
     { "nome": "Jhimmy", "posicao": "lateral", "fixo": null, "status": "ativo" },
@@ -19,7 +21,7 @@
     { "nome": "Davizinho", "posicao": "volante", "fixo": null, "status": "ativo" },
     { "nome": "Delson", "posicao": "volante", "fixo": null, "status": "ativo" },
     { "nome": "Fillipi", "posicao": "volante", "fixo": null, "status": "ativo" },
-    { "nome": "Kaique", "posicao": "volante", "fixo": null, "status": "ativo" },
+    { "nome": "Kaike", "posicao": "zagueiro", "fixo": null, "status": "ativo" },
     { "nome": "Nathan Eneas", "posicao": "volante", "fixo": null, "status": "ativo" },
     { "nome": "Rafinha", "posicao": "volante", "fixo": null, "status": "ativo" },
     { "nome": "Thiago", "posicao": "volante", "fixo": null, "status": "ativo" },
@@ -43,7 +45,6 @@
     { "nome": "Bruno Zanin", "posicao": "centroavante", "fixo": null, "status": "ativo" },
     { "nome": "Diego", "posicao": "centroavante", "fixo": null, "status": "ativo" },
     { "nome": "Edberto", "posicao": "centroavante", "fixo": null, "status": "ativo" },
-    { "nome": "Lucas", "posicao": "centroavante", "fixo": null, "status": "ativo" },
     { "nome": "Madruguinha", "posicao": "centroavante", "fixo": 20, "status": "ativo" },
     { "nome": "Pastor", "posicao": "centroavante", "fixo": null, "status": "ativo" }
 ]
