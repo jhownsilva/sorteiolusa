@@ -18,10 +18,10 @@ NUMEROS_FIXOS = {
 }
 
 NUMEROS_OFICIAIS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-NUMEROS_FICTICIOS = [12, 24, 25, 26, 27, 28, 29, 30]
+NUMEROS_FICTICIOS = [12, 24, 25, 26, 27, 28, 29, 30, 01]
 
 FAIXAS = {
-    "goleiro": [1, 31],
+    "goleiro": [1, 01],
     "zagueiro": [3, 4, 13, 12, 26, 30],
     "lateral": [2, 6, 14, 25, 28],
     "volante": [5, 15, 16, 24],
