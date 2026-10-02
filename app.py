@@ -118,12 +118,17 @@ def sortear():
 
     verde, branco = [], []
     
-    # Distribui alternadamente para garantir equilíbrio e aleatoriedade
+    # AJUSTE 2: Zigue-zague global para equilíbrio total
+    vez_do_verde = random.choice([True, False]) # Sorteia qual time recebe o primeiro jogador
+    
     for pos in categorias:
         random.shuffle(categorias[pos]) # Embaralha a posição antes de distribuir
-        for i, jog in enumerate(categorias[pos]):
-            if i % 2 == 0: verde.append(jog)
-            else: branco.append(jog)
+        for jog in categorias[pos]:
+            if vez_do_verde:
+                verde.append(jog)
+            else:
+                branco.append(jog)
+            vez_do_verde = not vez_do_verde # Passa a vez para o outro time imediatamente
 
     resultado = {"verde": {}, "branco": {}, "desfalques": desfalques}
     data_hoje = datetime.datetime.now().strftime("%d/%m/%Y")
@@ -133,8 +138,17 @@ def sortear():
         if not elenco: continue
         random.shuffle(elenco)
         
-        candidatos = [j['nome'] for j in elenco if j['nome'] not in ULTIMOS_CAPITAES]
-        if len(candidatos) < 2: candidatos = [j['nome'] for j in elenco]
+        # AJUSTE 1: Filtrar quem pode ser capitão (Goleiro NÃO pode)
+        elegiveis_capitao = [j for j in elenco if j['posicao'] != 'goleiro']
+        
+        # Segurança: se por um milagre o time só tiver goleiros
+        if not elegiveis_capitao: 
+            elegiveis_capitao = elenco
+        
+        candidatos = [j['nome'] for j in elegiveis_capitao if j['nome'] not in ULTIMOS_CAPITAES]
+        if len(candidatos) < 2: 
+            candidatos = [j['nome'] for j in elegiveis_capitao]
+            
         sorteados = random.sample(candidatos, min(len(candidatos), 2))
         
         cap = sorteados[0] if len(sorteados) >= 1 else "A definir"
