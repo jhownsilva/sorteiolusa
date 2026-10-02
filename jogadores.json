@@ -1,6 +1,6 @@
 [
     { "nome": "Felipe", "posicao": "goleiro", "fixo": 1, "status": "ativo" },
-    { "nome": "Kauan Colchao", "posicao": "goleiro", "fixo": null, "status": "ativo" },
+    { "nome": "Kauan Colchao", "posicao": "goleiro", "fixo": 01, "status": "ativo" },
     { "nome": "Thiago Gkay", "posicao": "goleiro", "fixo": null, "status": "ativo" },
     { "nome": "Bruno Fernandes", "posicao": "zagueiro", "fixo": null, "status": "ativo" },
     { "nome": "Dé", "posicao": "zagueiro", "fixo": null, "status": "ativo" },
